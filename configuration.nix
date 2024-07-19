@@ -11,8 +11,20 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
+    grub = {
+      device = "nodev";
+      efiSupport = true;
+      useOSProber = true;
+    };
+  };
+
+  # activate flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -45,6 +57,36 @@
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+
+  # enable sway
+
+  # Enable the gnome-keyring
+  services.gnome.gnome-keyring.enable = true;
+
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+    extraPackages = with pkgs; [
+      wl-clipboard
+      grim
+      slurp
+      swaybg
+      dunst
+      waybar
+      gammastep
+      python311Packages.i3ipc
+      rofi
+      brightnessctl
+      networkmanagerapplet
+    ];
+    extraOptions = [
+      "--unsupported-gpu"
+    ];
+    extraSessionCommands = 
+      ''
+        export WLR_NO_HARDWARE_CURSORS=1
+      '';
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -80,6 +122,8 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.simonheise = {
     isNormalUser = true;
+    home = "/home/simonheise";
+    initialPassword = "1";
     description = "Simon Heise";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
@@ -97,10 +141,20 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  neovim
-  vim
-  #  wget
+    neovim
+    vim
+    screenfetch
+    git
+    gcc
+    wget
+    fish
+    alacritty
+    python3
+    curl
   ];
+
+  # Set the default editor to vim
+  environment.variables.EDITOR = "nvim";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -121,12 +175,6 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.05";
 
 }
