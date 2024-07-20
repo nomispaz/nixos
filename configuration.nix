@@ -194,6 +194,7 @@
     meld
     libreoffice
     ranger
+    font-awesome
   ];
 
 
