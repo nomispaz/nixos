@@ -50,6 +50,9 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
+  # linux kernel
+  boot.kernelPackages = pkgs.unstable.linuxPackages_6_9;
+
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
@@ -57,6 +60,9 @@
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+
+  # chrony
+  services.chrony.enable = true;
 
   # enable sway
 
@@ -78,6 +84,7 @@
       rofi
       brightnessctl
       networkmanagerapplet
+      pavucontrol
     ];
     extraOptions = [
       "--unsupported-gpu"
@@ -100,24 +107,38 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.amd.updateMicrocode = true;
+
+  security = {
+    rtkit.enable = true;
+    apparmor = {
+      enable = true;
+      packages = with pkgs; [
+        apparmor-profiles
+      ];
+    };
+  };
+
+  services.clamav = {
+    scanner.enable = true;
+    updater.enable = true;
+  };
+
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+   services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.simonheise = {
@@ -127,7 +148,6 @@
     description = "Simon Heise";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate
     #  thunderbird
     ];
   };
@@ -141,6 +161,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    btrfs-progs
+    sudo
     neovim
     vim
     screenfetch
@@ -151,7 +173,29 @@
     alacritty
     python3
     curl
+    emacs
+    htop
+    gnugrep
+    xdg-utils
+    xdg-user-dirs
+    blueman
+    snapper
+    egl-wayland
+    calibre
+    clipgrab
+    discord
+    keepassxc
+    obs-studio
+    thunderbird
+    veracrypt
+    vlc
+    flatpak
+    testdisk
+    meld
+    libreoffice
+    ranger
   ];
+
 
   # Set the default editor to vim
   environment.variables.EDITOR = "nvim";
@@ -169,11 +213,16 @@
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
+  #firewall
+  networking.nftables.enable = true;
+  networking.firewall = {
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+    enable = true;
+  };
 
   system.stateVersion = "24.05";
 
