@@ -109,41 +109,42 @@
   # chrony
   services.chrony.enable = true;
 
-  # enable sway
-
   # Enable the gnome-keyring
   services.gnome.gnome-keyring.enable = true;
 
-  programs.sway = {
-    enable = true;
-    package = pkgs.unstable.sway;
-    wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      wl-clipboard
-      grim
-      slurp
-      swaybg
-      dunst
-      gammastep
-      python311Packages.i3ipc
-      rofi
-      brightnessctl
-      pavucontrol
-      unstable.wlroots
-    ];
-    extraOptions = [
-      "--unsupported-gpu"
-    ];
-    extraSessionCommands = 
-      ''
-        export WLR_NO_HARDWARE_CURSORS=1
-      '';
-  };
+  # enable sway
+  programs = {
 
-  programs.waybar.enable = true;
-  programs.nm-applet = {
-    enable = true;
-    indicator = true;
+    sway = {
+      enable = true;
+      package = pkgs.unstable.sway;
+      wrapperFeatures.gtk = true;
+      extraPackages = with pkgs; [
+        wl-clipboard
+        grim
+        slurp
+        swaybg
+        dunst
+        gammastep
+        python311Packages.i3ipc
+        rofi
+        brightnessctl
+        pavucontrol
+        unstable.wlroots
+      ];
+      extraOptions = [
+        "--unsupported-gpu"
+      ];
+      extraSessionCommands = 
+        ''
+          export WLR_NO_HARDWARE_CURSORS=1
+        '';
+    };
+    waybar.enable = true;
+    nm-applet = {
+      enable = true;
+      indicator = true;
+    };
   };
   xdg.portal.wlr.enable = true;
 
@@ -159,11 +160,28 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # config for hardware
+
   hardware = {
     tuxedo-keyboard.enable = true;
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = true;
     tuxedo-rs.enable = true;
+    # Disable pulseaudio since pipewire should be used
+    pulseaudio.enable = false;
+  };
+
+  # config for services
+
+  # configure pipewire
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
   };
 
   security = {
@@ -183,22 +201,20 @@
     };
   };
 
+  systemd.coredump = {
+    enable = true;
+    extraConfig = 
+    ''
+    Storage=none
+    '';
+  };
+
   services.clamav = {
     scanner.enable = true;
     updater.enable = true;
   };
 
-  # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    wireplumber.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-  };
+  
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
@@ -215,22 +231,23 @@
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    package = pkgs.unstable.neovim-unwrapped;
-    withPython3 = true;
+  # configs for programs
+  programs = {
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      package = pkgs.unstable.neovim-unwrapped;
+      withPython3 = true;
+    };
+    git.enable = true;
+    fish.enable = true;
+    htop.enable = true;
+    firefox.enable = true;
   };
-  programs.git.enable = true;
-  programs.fish.enable = true;
-  programs.htop.enable = true;
-
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -264,6 +281,7 @@
     ranger
     font-awesome
     unstable.linuxKernel.packages.linux_6_9.cpupower
+    brave
   ];
 
 
