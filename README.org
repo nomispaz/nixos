@@ -1,0 +1,35 @@
+* Commands
+** Show installed packages in store
+#+BEGIN_SRC lang
+nix-store --query --requisites /run/current-system/ | cut -d- -f2- | sort | uniq | grep discord
+#+END_SRC
+
+** Update all inputs in flake to new version
+#+BEGIN_SRC 
+nix flake update
+#+END_SRC
+
+** Update only one input of flake to new version
+#+BEGIN_SRC 
+nix flake lock --update-input nixpkgs-unstable
+#+END_SRC
+
+** Rollback to last version
+#+BEGIN_SRC 
+sudo nixos-rebuild --rollback switch --flake .
+#+END_SRC
+
+** Perform system update of all packages
+#+BEGIN_SRC 
+sudo nixos-rebuild switch --flake .
+#+END_SRC
+
+** Cleanup system
+#+BEGIN_SRC 
+nix-collect-garbage
+#+END_SRC
+
+** Install package only to a nix shell and not in the system
+#+BEGIN_SRC 
+nix-shell -p htop
+#+END_SRC

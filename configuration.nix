@@ -10,6 +10,51 @@
       ./hardware-configuration.nix
     ];
 
+  fileSystems."/".options = [
+    "rw"
+    "noatime"
+    "compress=zstd:3"
+    "ssd"
+    "discard=async"
+    "space_cache=v2"
+  ];
+
+  fileSystems."/.snapshots".options = [
+    "rw"
+    "noatime"
+    "compress=zstd:3"
+    "ssd"
+    "discard=async"
+    "space_cache=v2"
+  ];
+
+  fileSystems."/home".options = [
+    "rw"
+    "noatime"
+    "compress=zstd:3"
+    "ssd"
+    "discard=async"
+    "space_cache=v2"
+  ];
+
+  fileSystems."/nix".options = [
+    "rw"
+    "noatime"
+    "compress=zstd:3"
+    "ssd"
+    "discard=async"
+    "space_cache=v2"
+  ];
+
+  fileSystems."/var/log".options = [
+    "rw"
+    "noatime"
+    "compress=zstd:3"
+    "ssd"
+    "discard=async"
+    "space_cache=v2"
+  ];
+
   # Bootloader.
   boot.loader = {
     efi = {
@@ -71,6 +116,7 @@
 
   programs.sway = {
     enable = true;
+    package = pkgs.unstable.sway;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       wl-clipboard
@@ -78,13 +124,12 @@
       slurp
       swaybg
       dunst
-      waybar
       gammastep
       python311Packages.i3ipc
       rofi
       brightnessctl
-      networkmanagerapplet
       pavucontrol
+      unstable.wlroots
     ];
     extraOptions = [
       "--unsupported-gpu"
@@ -94,6 +139,13 @@
         export WLR_NO_HARDWARE_CURSORS=1
       '';
   };
+
+  programs.waybar.enable = true;
+  programs.nm-applet = {
+    enable = true;
+    indicator = true;
+  };
+  xdg.portal.wlr.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -107,8 +159,12 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  hardware.enableRedistributableFirmware = true;
-  hardware.cpu.amd.updateMicrocode = true;
+  hardware = {
+    tuxedo-keyboard.enable = true;
+    enableRedistributableFirmware = true;
+    cpu.amd.updateMicrocode = true;
+    tuxedo-rs.enable = true;
+  };
 
   security = {
     rtkit.enable = true;
@@ -117,6 +173,13 @@
       packages = with pkgs; [
         apparmor-profiles
       ];
+    };
+    sudo = {
+      enable = true;
+      extraConfig = 
+      ''
+      Defaults targetpw
+      '';
     };
   };
 
@@ -138,7 +201,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-   services.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.simonheise = {
@@ -158,23 +221,28 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    package = pkgs.unstable.neovim-unwrapped;
+    withPython3 = true;
+  };
+  programs.git.enable = true;
+  programs.fish.enable = true;
+  programs.htop.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     btrfs-progs
-    sudo
-    neovim
     vim
+    emacs
     screenfetch
-    git
     gcc
     wget
-    fish
     alacritty
     python3
     curl
-    emacs
-    htop
     gnugrep
     xdg-utils
     xdg-user-dirs
@@ -183,7 +251,7 @@
     egl-wayland
     calibre
     clipgrab
-    discord
+    unstable.discord
     keepassxc
     obs-studio
     thunderbird
@@ -195,6 +263,7 @@
     libreoffice
     ranger
     font-awesome
+    unstable.linuxKernel.packages.linux_6_9.cpupower
   ];
 
 
