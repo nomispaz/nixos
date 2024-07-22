@@ -96,7 +96,7 @@
   };
 
   # linux kernel
-  boot.kernelPackages = pkgs.unstable.linuxPackages_6_9;
+  boot.kernelPackages = pkgs.linuxPackages_6_9;
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -117,7 +117,7 @@
 
     sway = {
       enable = true;
-      package = pkgs.unstable.sway;
+      package = pkgs.sway;
       wrapperFeatures.gtk = true;
       extraPackages = with pkgs; [
         wl-clipboard
@@ -130,7 +130,8 @@
         rofi
         brightnessctl
         pavucontrol
-        unstable.wlroots
+        wlroots
+	waybar
       ];
       extraOptions = [
         "--unsupported-gpu"
@@ -139,11 +140,6 @@
         ''
           export WLR_NO_HARDWARE_CURSORS=1
         '';
-    };
-    waybar.enable = true;
-    nm-applet = {
-      enable = true;
-      indicator = true;
     };
   };
   xdg.portal.wlr.enable = true;
@@ -199,6 +195,10 @@
       Defaults targetpw
       '';
     };
+    loginDefs.settings = {
+      SHA_CRYPT_MIN_ROUNDS = 500000;
+      SHA_CRYPT_MAX_ROUNDS = 500000;
+    };
   };
 
   systemd.coredump = {
@@ -225,7 +225,7 @@
     home = "/home/simonheise";
     initialPassword = "1";
     description = "Simon Heise";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirt" "simonheise" ];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -239,14 +239,31 @@
     neovim = {
       enable = true;
       defaultEditor = true;
-      package = pkgs.unstable.neovim-unwrapped;
+      package = pkgs.neovim-unwrapped;
       withPython3 = true;
     };
     git.enable = true;
     fish.enable = true;
     htop.enable = true;
     firefox.enable = true;
+
+    # gaming
+    steam = {
+      enable = true;
+      extraPackages = with pkgs; [
+        gamemode
+        winetricks
+        wine
+        mangohud
+      ];
+    };
+
+    # virtualization
+    virt-manager.enable = true;
+
   };
+
+  virtualisation.libvirtd.enable = true;
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -268,7 +285,7 @@
     egl-wayland
     calibre
     clipgrab
-    unstable.discord
+    discord
     keepassxc
     obs-studio
     thunderbird
@@ -280,7 +297,7 @@
     libreoffice
     ranger
     font-awesome
-    unstable.linuxKernel.packages.linux_6_9.cpupower
+    linuxKernel.packages.linux_6_9.cpupower
     brave
   ];
 

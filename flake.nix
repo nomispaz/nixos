@@ -1,19 +1,19 @@
 {
-  description = "A simple NixOS flake";
+  description = "Masterflake";
 
   inputs = {
     # NixOS official package source, using the nixos-23.11 branch here
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }:
+  outputs = { self, nixpkgs, nixpkgs-stable, ... }:
     let
       system = "x86_64-linux";
-      overlay-unstable = final: prev: {
+      overlay-stable = final: prev: {
         # unstable = nixpkgs-unstable.legacyPackages.${prev.system};
         # use this variant if unfree packages are needed:
-        unstable = import nixpkgs-unstable {
+        unstable = import nixpkgs-stable {
           inherit system;
           config.allowUnfree = true;
         };
@@ -23,7 +23,7 @@
         inherit system;
         modules = [
           # Overlays-module makes "pkgs.unstable" available in configuration.nix
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
           ./configuration.nix
         ];
       };
