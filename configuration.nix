@@ -10,6 +10,20 @@
       ./hardware-configuration.nix
     ];
 
+  nixpkgs.overlays = [
+    # patch wlroots to prevent flickering on external monitor with nvidia
+    (final: prev: {
+      wlroots_0_17 = prev.wlroots_0_17.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+           (prev.fetchpatch {
+	    url = "https://raw.githubusercontent.com/nomispaz/nixos/c7570c47b3b340391a5a6c3f71f4cf9401a46b8a/overlays/patches/wlroots/wlroots-nvidia.patch";
+	    hash = "sha256-s9AYejh9hK5x+v+WWGeflgaSmCFBwFNUNMeeeIxfuPo=";
+		})
+        ];
+      });
+    })
+  ];
+
   fileSystems."/".options = [
     "rw"
     "noatime"
@@ -96,7 +110,15 @@
   };
 
   # linux kernel
-  boot.kernelPackages = pkgs.linuxPackages_6_9;
+  boot = {
+    kernelPackages = pkgs.linuxPackages_6_9;
+    kernelParams = [
+      "mitigations=auto"
+      "security=apparmor"
+      "amd_pstate=passive"
+      "nvidia_drm.modeset=1"
+    ];
+  };
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -328,6 +350,25 @@
   # networking.firewall.enable = false;
     enable = true;
   };
+
+  # nvidia card
+  # enable opengl
+  hardware.graphics.enable = true;
+  
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    open = true;
+    nvidiaSettings = true;
+    # dynamicBoost.enable = true;
+  };
+
+  # amd video card
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ 
+    "amdgpu"
+    "nvidia"
+  ];
 
   system.stateVersion = "24.05";
 
