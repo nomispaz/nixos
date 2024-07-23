@@ -11,21 +11,33 @@
     let
       system = "x86_64-linux";
       overlay-stable = final: prev: {
-        # unstable = nixpkgs-unstable.legacyPackages.${prev.system};
-        # use this variant if unfree packages are needed:
-        unstable = import nixpkgs-stable {
+          stable = import nixpkgs-stable {
           inherit system;
           config.allowUnfree = true;
         };
       };    
     in {
-      nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
+      nixConfig = {
+        nix.settings.experimental-features = [ "nix-command" "flakes" ];
+      };
+      nixosConfigurations."xmgneo15" = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          # Overlays-module makes "pkgs.unstable" available in configuration.nix
+          # Overlays-module makes "pkgs.stable" available in configuration.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
-          ./configuration.nix
+          ./hosts/xmgneo15/configuration.nix
+	  ./modules/nvidia.nix
+	  ./modules/amd.nix
+	  ./modules/virt-manager.nix
         ];
+      };
+      nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          # Overlays-module makes "pkgs.stable" available in configuration.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
+          ./hosts/vmqemu/configuration.nix
+	];
       };
     };
 }
