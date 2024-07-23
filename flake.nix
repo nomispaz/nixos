@@ -29,6 +29,7 @@
 	  ./modules/nvidia.nix
 	  ./modules/amd.nix
 	  ./modules/virt-manager.nix
+	  ./modules/gaming.nix
         ];
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {

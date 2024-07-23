@@ -21,7 +21,7 @@ sudo nixos-rebuild --rollback switch --flake .
 
 ** Perform system update of all packages
 #+BEGIN_SRC 
-sudo nixos-rebuild switch --flake .
+sudo nixos-rebuild switch --flake $HOME/git_repos/nixos#xmgneo15
 #+END_SRC
 
 ** Cleanup system

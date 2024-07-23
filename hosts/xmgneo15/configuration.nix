@@ -8,67 +8,13 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./filesystems.nix
     ];
 
-  fileSystems."/".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
+  # define hostname
+  networking.hostName = "xmgneo15";
 
-  fileSystems."/.snapshots".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
-
-  fileSystems."/home".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
-
-  fileSystems."/nix".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
-
-  fileSystems."/var/log".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
-
-  fileSystems."/mnt/nvme2" =
-    { device = "/dev/disk/by-uuid/5478d2bc-1d51-467f-b488-87fed42efffb";
-      fsType = "btrfs";
-      options = [        
-	"rw"
-        "noatime"
-        "compress=zstd:3"
-        "ssd"
-        "discard=async"
-        "space_cache=v2"
-      ];
-    };
-
-  # Bootloader.
+# Bootloader.
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
@@ -84,7 +30,6 @@
   # activate flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.hostName = "xmgneo15"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
@@ -114,8 +59,15 @@
     kernelParams = [
       "mitigations=auto"
       "security=apparmor"
-      "amd_pstate=passive"
+      "tuxedo_keyboard.mode=0"
+      "tuxedo_keyboard.brightness=25"
+      "tuxedo_keyboard.color_left=0x0000ff"
     ];
+  };
+
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "ondemand";
   };
 
   # Enable the X11 windowing system.
@@ -194,8 +146,6 @@
   hardware = {
     tuxedo-keyboard.enable = true;
     enableRedistributableFirmware = true;
-    cpu.amd.updateMicrocode = true;
-    tuxedo-rs.enable = false;
     # Disable pulseaudio since pipewire should be used
     pulseaudio.enable = false;
   };
@@ -247,8 +197,6 @@
     updater.enable = true;
   };
 
-  
-
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
@@ -281,11 +229,6 @@
     fish.enable = true;
     htop.enable = true;
     firefox.enable = true;
-
-    # gaming
-    steam = {
-      enable = true;
-    };
 
   };
   
@@ -327,11 +270,6 @@
     go
     gopls
     pciutils
-    gamemode
-    winetricks
-    wine
-    mangohud
-
   ];
 
   # Set the default editor to vim
@@ -376,6 +314,11 @@
      nvidiaBusId = "PCI:1:0:0";
      amdgpuBusId = "PCI:6:0:0";
     };
+  };
+
+  hardware.tuxedo-rs = {
+    enable = true;
+    tailor-gui.enable = true;
   };
 
   system.stateVersion = "24.05";
