@@ -29,6 +29,16 @@ sudo nixos-rebuild switch --flake $HOME/git_repos/nixos#xmgneo15
 nix-collect-garbage
 #+END_SRC
 
+or for more garbage collection with sudo and -d to delete all backups
+#+BEGIN_SRC 
+sudo nix-collect-garbage -d
+#+END_SRC
+
+or delete backups older than xx days
+#+BEGIN_SRC 
+sudo nix-collect-garbage --delete-older-than 14d
+#+END_SRC
+
 ** Install package only to a nix shell and not in the system
 #+BEGIN_SRC 
 nix-shell -p htop
