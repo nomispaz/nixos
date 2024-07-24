@@ -4,6 +4,13 @@
   imports = [
   ];
 
+  # standard fileSystems with btrfs. Layout (subvolumes):
+  # root -> /
+  # snapshots -> /.snapshots/
+  # home -> /home
+  # nix -> /nix
+  # var_log -> /var/log
+  # swap -> /swap
   fileSystems."/".options = [
     "rw"
     "noatime"
@@ -49,6 +56,14 @@
     "space_cache=v2"
   ];
 
+  fileSystems."/swap".options = [
+    "noatime"
+    "ssd"
+  ];
+  # swap device
+  swapDevices = [ { device = "/swap/swapfile"; } ];
+
+  # file system of second ssd
   fileSystems."/mnt/nvme2" =
     { device = "/dev/disk/by-uuid/5478d2bc-1d51-467f-b488-87fed42efffb";
       fsType = "btrfs";
