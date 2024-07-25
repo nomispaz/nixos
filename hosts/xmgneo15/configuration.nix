@@ -65,10 +65,10 @@
     ];
   };
 
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "ondemand";
-  };
+  #powerManagement = {
+  #  enable = true;
+  #  cpuFreqGovernor = "powersave";
+  #};
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -148,7 +148,15 @@
     enableRedistributableFirmware = true;
     # Disable pulseaudio since pipewire should be used
     pulseaudio.enable = false;
-  };
+    # bluetooth
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+      };
+  
+  #blueman for bluetooth
+  services.blueman.enable = true;
 
   # config for services
 
@@ -247,7 +255,6 @@
     gnugrep
     xdg-utils
     xdg-user-dirs
-    blueman
     snapper
     egl-wayland
     calibre

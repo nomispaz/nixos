@@ -13,6 +13,7 @@
     winetricks
     wine
     mangohud
+    lutris
   ];
 
 }

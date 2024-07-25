@@ -16,7 +16,7 @@
   # enable amd-pstate mode
   boot = {
     kernelParams = [
-      "amd_pstate=passive"
+      "amd_pstate=active"
     ];
   };
 
