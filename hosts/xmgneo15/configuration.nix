@@ -277,6 +277,7 @@
     go
     gopls
     pciutils
+    kdePackages.kwallet-pam
   ];
 
   # Set the default editor to vim
