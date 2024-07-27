@@ -11,6 +11,20 @@
       ./filesystems.nix
     ];
 
+  nixpkgs.overlays = [
+    # patch tuxedo-keyboard to be able to build on Kernel 6.10
+    (final: prev: {
+      tuxedo-keyboard = prev.tuxedo-keyboard.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+           (prev.fetchurl {
+	    url = "https://raw.githubusercontent.com/nomispaz/nixos/155c905820fe54955b02ade084a9c95b6d2409bf/overlays/patches/tuxedo-keyboard/fix-dot-ower.patch";
+	    hash = "sha256-a0t9iRdDs5IeNlsAk+U/WRKmaR3eecURvqKY8/brhbo=";
+	    })
+        ];
+      });
+    })
+  ];
+
   # define hostname
   networking.hostName = "xmgneo15";
 
@@ -55,7 +69,7 @@
 
   # linux kernel
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_9;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "mitigations=auto"
       "security=apparmor"
