@@ -86,7 +86,6 @@
 
   # enable sway
   programs = {
-
     sway = {
       enable = true;
       package = pkgs.sway;
@@ -208,18 +207,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.simonheise = {
-    isNormalUser = true;
-    home = "/home/simonheise";
-    initialPassword = "1";
-    description = "Simon Heise";
-    extraGroups = [ "networkmanager" "wheel" "simonheise" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -257,18 +244,12 @@
     xdg-user-dirs
     snapper
     egl-wayland
-    calibre
-    clipgrab
-    discord
     keepassxc
-    obs-studio
-    thunderbird
     veracrypt
     vlc
     flatpak
     testdisk
     meld
-    libreoffice
     ranger
     font-awesome
     linuxKernel.packages.linux_6_9.cpupower

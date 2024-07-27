@@ -8,54 +8,13 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./filesystems.nix
     ];
 
-  fileSystems."/".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
+  # define hostname
+  networking.hostName = "vmqemu";
 
-  fileSystems."/.snapshots".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
-
-  fileSystems."/home".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
-
-  fileSystems."/nix".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
-
-  fileSystems."/var/log".options = [
-    "rw"
-    "noatime"
-    "compress=zstd:3"
-    "ssd"
-    "discard=async"
-    "space_cache=v2"
-  ];
-
-  # Bootloader.
+# Bootloader.
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
@@ -71,7 +30,6 @@
   # activate flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.hostName = "vmqemu"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
@@ -101,9 +59,13 @@
     kernelParams = [
       "mitigations=auto"
       "security=apparmor"
-      "amd_pstate=passive"
     ];
   };
+
+  #powerManagement = {
+  #  enable = true;
+  #  cpuFreqGovernor = "powersave";
+  #};
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -121,7 +83,6 @@
 
   # enable sway
   programs = {
-
     sway = {
       enable = true;
       package = pkgs.sway;
@@ -179,13 +140,18 @@
   # config for hardware
 
   hardware = {
-    tuxedo-keyboard.enable = true;
     enableRedistributableFirmware = true;
-    cpu.amd.updateMicrocode = true;
-    tuxedo-rs.enable = false;
     # Disable pulseaudio since pipewire should be used
     pulseaudio.enable = false;
-  };
+    # bluetooth
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+      };
+  
+  #blueman for bluetooth
+  services.blueman.enable = true;
 
   # config for services
 
@@ -234,22 +200,8 @@
     updater.enable = true;
   };
 
-  
-
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.simonheise = {
-    isNormalUser = true;
-    home = "/home/simonheise";
-    initialPassword = "1";
-    description = "Simon Heise";
-    extraGroups = [ "networkmanager" "wheel" "simonheise" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -262,20 +214,17 @@
       package = pkgs.neovim-unwrapped;
       withPython3 = true;
     };
-    git.enable = true;
+    git = {
+      enable = true;
+    };
     fish.enable = true;
     htop.enable = true;
     firefox.enable = true;
 
-    # gaming
-    steam = {
-      enable = true;
-    };
-
   };
   
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # $ nix search nixpkgs wget
   environment.systemPackages = with pkgs; [
     btrfs-progs
     vim
@@ -289,21 +238,14 @@
     gnugrep
     xdg-utils
     xdg-user-dirs
-    blueman
     snapper
     egl-wayland
-    calibre
-    clipgrab
-    discord
     keepassxc
-    obs-studio
-    thunderbird
     veracrypt
     vlc
     flatpak
     testdisk
     meld
-    libreoffice
     ranger
     font-awesome
     linuxKernel.packages.linux_6_9.cpupower
@@ -312,11 +254,7 @@
     go
     gopls
     pciutils
-    gamemode
-    winetricks
-    wine
-    mangohud
-
+    kdePackages.kwallet-pam
   ];
 
   # Set the default editor to vim
@@ -353,14 +291,6 @@
       vaapiVdpau
     ];
     enable32Bit = true;
-  };
-
-  #nvidia hardware PCI-IDs for nvidia-offload
-  hardware.nvidia = {
-    prime = {
-     nvidiaBusId = "PCI:1:0:0";
-     amdgpuBusId = "PCI:6:0:0";
-    };
   };
 
   system.stateVersion = "24.05";

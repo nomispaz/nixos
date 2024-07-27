@@ -43,3 +43,7 @@ sudo nix-collect-garbage --delete-older-than 14d
 #+BEGIN_SRC 
 nix-shell -p htop
 #+END_SRC
+** Check differences between versions
+#+BEGIN_SRC 
+nix profile diff-closures --profile /nix/var/nix/profiles/system
+#+END_SRC

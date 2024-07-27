@@ -26,10 +26,12 @@
           # Overlays-module makes "pkgs.stable" available in configuration.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
           ./hosts/xmgneo15/configuration.nix
+	  ./modules/users.nix
 	  ./modules/nvidia.nix
 	  ./modules/amd.nix
 	  ./modules/virt-manager.nix
 	  ./modules/gaming.nix
+	  ./modules/various_programs.nix
         ];
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
@@ -38,6 +40,7 @@
           # Overlays-module makes "pkgs.stable" available in configuration.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
           ./hosts/vmqemu/configuration.nix
+	  ./modules/users.nix
 	];
       };
     };

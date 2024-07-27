@@ -9,7 +9,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    gamemode
     winetricks
     wine
     mangohud
