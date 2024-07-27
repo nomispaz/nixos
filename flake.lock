@@ -19,12 +19,12 @@
     "nixpkgs-nomispaz": {
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-GitVTJQKCNnUE8XabEaTGfYL0VnLgEWOJJ5cs1V0hek=",
-        "path": "/nix/store/ckdl20aia43n2llndfpzlp49lk0yv1rk-source/packages",
+        "narHash": "sha256-Qy0IRVOPHKdFEWXggusx39VeU5XhVl9jvPQsEVaFDjc=",
+        "path": "/nix/store/8blw7lp2qagbgx5rzy7lxdb3xd117ack-source/packages",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/ckdl20aia43n2llndfpzlp49lk0yv1rk-source/packages",
+        "path": "/nix/store/8blw7lp2qagbgx5rzy7lxdb3xd117ack-source/packages",
         "type": "path"
       }
     },

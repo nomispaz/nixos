@@ -6,7 +6,8 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-nomispaz = {
-	url = "github:nomispaz/nixos/packages";
+	# url = "github:nomispaz/nixos_repo";
+	url = "./packages";
 	flake = true;
     };
   };
