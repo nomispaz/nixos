@@ -11,19 +11,19 @@
       ./filesystems.nix
     ];
 
-  nixpkgs.overlays = [
-    # patch tuxedo-keyboard to be able to build on Kernel 6.10
-    (final: prev: {
-      tuxedo-keyboard = prev.tuxedo-keyboard.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [
-           (prev.fetchurl {
-	    url = "https://raw.githubusercontent.com/nomispaz/nixos/155c905820fe54955b02ade084a9c95b6d2409bf/overlays/patches/tuxedo-keyboard/fix-dot-ower.patch";
-	    hash = "sha256-a0t9iRdDs5IeNlsAk+U/WRKmaR3eecURvqKY8/brhbo=";
-	    })
-        ];
-      });
-    })
-  ];
+   nixpkgs.overlays = [
+     # patch tuxedo-keyboard to be able to build on Kernel 6.10
+     (final: prev: {
+       tuxedo-keyboard = prev.tuxedo-keyboard.overrideAttrs (old: {
+         patches = (old.patches or []) ++ [
+            (prev.fetchpatch {
+             url = "https://raw.githubusercontent.com/nomispaz/nixos/155c905820fe54955b02ade084a9c95b6d2409bf/overlays/patches/tuxedo-keyboard/fix-dot-owner.patch";
+             hash = "sha256-asfdksndfkjsdkfj";
+             })
+         ];
+       });
+     })
+   ];
 
   # define hostname
   networking.hostName = "xmgneo15";
@@ -266,13 +266,14 @@
     meld
     ranger
     font-awesome
-    linuxKernel.packages.linux_6_9.cpupower
+    linuxKernel.packages.linux_latest.cpupower
     brave
     networkmanagerapplet
     go
     gopls
     pciutils
     kdePackages.kwallet-pam
+    linuxKernel.packages.linux_latest.tuxedo-keyboard
   ];
 
   # Set the default editor to vim
