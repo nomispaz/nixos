@@ -245,7 +245,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     btrfs-progs
-    vim
+    stable.vim
     emacs
     screenfetch
     gcc
@@ -266,15 +266,16 @@
     meld
     ranger
     font-awesome
-    linuxKernel.packages.linux_latest.cpupower
+    linuxKernel.packages.linux_6_10.cpupower
     brave
     networkmanagerapplet
     go
     gopls
     pciutils
     kdePackages.kwallet-pam
-    linuxKernel.packages.linux_latest.tuxedo-keyboard
-  ];
+    #linuxKernel.packages.linux_latest.tuxedo-keyboard
+    nomispaz.tuxedo-drivers
+    ];
 
   # Set the default editor to vim
   environment.variables.EDITOR = "nvim";

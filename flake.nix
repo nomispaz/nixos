@@ -5,9 +5,13 @@
     # NixOS official package source, using the nixos-23.11 branch here
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-nomispaz = {
+	url = "github:nomispaz/nixos/packages";
+	flake = true;
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, ... }:
+  outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-nomispaz, ... }:
     let
       system = "x86_64-linux";
       overlay-stable = final: prev: {
@@ -32,6 +36,7 @@
 	  ./modules/virt-manager.nix
 	  ./modules/gaming.nix
 	  ./modules/various_programs.nix
+	  nixpkgs-nomispaz.nomispazPackages.tuxedo_drivers
         ];
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
