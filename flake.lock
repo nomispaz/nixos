@@ -16,18 +16,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-nomispaz": {
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-Qy0IRVOPHKdFEWXggusx39VeU5XhVl9jvPQsEVaFDjc=",
-        "path": "/nix/store/yx3mkrkmj3w43zcm1msyni2mk72g69lf-source/packages",
-        "type": "path"
-      },
-      "original": {
-        "path": "/nix/store/yx3mkrkmj3w43zcm1msyni2mk72g69lf-source/packages",
-        "type": "path"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1721949857,
@@ -47,7 +35,6 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "nixpkgs-nomispaz": "nixpkgs-nomispaz",
         "nixpkgs-stable": "nixpkgs-stable"
       }
     }
