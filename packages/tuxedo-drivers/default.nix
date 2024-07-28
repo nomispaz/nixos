@@ -18,15 +18,16 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "tuxedocomputers/development/packages";
     repo = "tuxedo-drivers";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-hZ4fY6TQj4YIOzFH+iZq90VPr87KIzke4N2PiJGYeEE=";
+    hash = "sha256-IZ1K7n4OrhI52u7EH0ljVkKwc/uf53sMd9qpTLjvzls=";
   };
 
   patches = [
-    (fetchpatch {
-      name = "fix-dot-owner.patch";
-      url = "https://raw.githubusercontent.com/nomispaz/nixos/155c905820fe54955b02ade084a9c95b6d2409bf/overlays/patches/tuxedo-keyboard/fix-dot-owner.patch";
-      hash = "sha256-VO420pPu9wQSJf23p+VcTl1oN2ImVwuoSdBWKA56JpE=";
-    })
+    #(fetchpatch {
+    #  name = "fix-dot-owner.patch";
+    #  url = "https://raw.githubusercontent.com/nomispaz/nixos/main/overlays/patches/tuxedo-keyboard/fix-dot-owner.patch";
+    #  hash = "sha256-VO420pPu9wQSJf23p+VcTl1oN2ImVwuoSdBWKA56JpE=";
+    #})
+    ../../overlays/patches/tuxedo-keyboard/fix-dot-owner.patch
   ];
 
   buildInputs = [ pahole ];

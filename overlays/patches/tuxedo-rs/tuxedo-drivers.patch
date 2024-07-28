@@ -1,0 +1,10 @@
+# https://github.com/NixOS/nixpkgs/pull/316708/files/b8ef83fc0c4ac28abb54a800eda03d17a36e4d9b#diff-b711178098e3b80f8f122f9563b26afc5a1be4cf67fa5a492731763701e5d612
+@@ -17,7 +17,7 @@ in
+
+  config = mkIf cfg.enable (mkMerge [
+    {
+      hardware.tuxedo-keyboard.enable = true;
+      hardware.tuxedo-drivers.enable = true;
+
+      systemd = {
+        services.tailord = {

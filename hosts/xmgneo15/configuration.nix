@@ -11,21 +11,7 @@
       ./filesystems.nix
     ];
 
-   #nixpkgs.overlays = [
-   #  # patch tuxedo-keyboard to be able to build on Kernel 6.10
-   #  (final: prev: {
-   #    tuxedo-keyboard = prev.tuxedo-keyboard.overrideAttrs (old: {
-   #      patches = (old.patches or []) ++ [
-   #         (prev.fetchpatch {
-   #          url = "https://raw.githubusercontent.com/nomispaz/nixos/155c905820fe54955b02ade084a9c95b6d2409bf/overlays/patches/tuxedo-keyboard/fix-dot-owner.patch";
-   #          hash = "sha256-asfdksndfkjsdkfj";
-   #          })
-   #      ];
-   #    });
-   #  })
-   #];
-
-  # define hostname
+# define hostname
   networking.hostName = "xmgneo15";
 
 # Bootloader.
@@ -69,13 +55,10 @@
 
   # linux kernel
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_10;
     kernelParams = [
       "mitigations=auto"
       "security=apparmor"
-      "tuxedo_keyboard.mode=0"
-      "tuxedo_keyboard.brightness=25"
-      "tuxedo_keyboard.color_left=0x0000ff"
     ];
   };
 
@@ -157,7 +140,6 @@
   # config for hardware
 
   hardware = {
-    tuxedo-keyboard.enable = true;
     enableRedistributableFirmware = true;
     # Disable pulseaudio since pipewire should be used
     pulseaudio.enable = false;
@@ -273,8 +255,6 @@
     gopls
     pciutils
     kdePackages.kwallet-pam
-    #linuxKernel.packages.linux_latest.tuxedo-keyboard
-    curl (callPackage ../../packages/packages/tuxedo-drivers/default.nix {})
   ];
 
   # Set the default editor to vim
@@ -319,11 +299,6 @@
      nvidiaBusId = "PCI:1:0:0";
      amdgpuBusId = "PCI:6:0:0";
     };
-  };
-
-  hardware.tuxedo-rs = {
-    enable = true;
-    tailor-gui.enable = true;
   };
 
   system.stateVersion = "24.05";

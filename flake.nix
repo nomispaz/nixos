@@ -5,14 +5,17 @@
     # NixOS official package source, using the nixos-23.11 branch here
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-#    nixpkgs-nomispaz = {
-#	#url = "github:nomispaz/nixos_repo";
-#	url = "./packages";
-#	flake = false;
-#    };
+    nixpkgs-nomispaz = {
+	#url = "github:nomispaz/nixos_repo";
+        url = "./packages";
+        flake = true;
+        # Avoid pulling in the nixpkgs that we pin in the tuxedo-nixos repo.
+	# This should give the least surprises and saves on disk space.
+	inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, ... }:
+  outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-nomispaz, ... }:
     let
       system = "x86_64-linux";
       overlay-stable = final: prev: {
@@ -37,6 +40,8 @@
 	  ./modules/virt-manager.nix
 	  ./modules/gaming.nix
 	  ./modules/various_programs.nix
+	  ./modules/tuxedo.nix
+	  nixpkgs-nomispaz.nixosModules.default
         ];
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
