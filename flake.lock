@@ -25,11 +25,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-YsN8A+qxAsI6Quxa0W2dfrKBIz0zPqt3x5+hoxUoyq4=",
-        "path": "/nix/store/8wnp7di2s08bhsglxfldima1rp4bnip9-source/packages",
+        "path": "/nix/store/9qs7bakyw7ypgbfijr7hw9w02rk0rkgz-source/packages",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/8wnp7di2s08bhsglxfldima1rp4bnip9-source/packages",
+        "path": "/nix/store/9qs7bakyw7ypgbfijr7hw9w02rk0rkgz-source/packages",
         "type": "path"
       }
     },

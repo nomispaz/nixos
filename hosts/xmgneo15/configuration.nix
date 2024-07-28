@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -59,13 +58,14 @@
     kernelParams = [
       "mitigations=auto"
       "security=apparmor"
-      "tuxedo_keyboard.mode=0"
-      "tuxedo_keyboard.brightness=25"
-      "tuxedo_keyboard.color_left=0x0000ff"
     ];
-    extraModulePackages = [
-      (config.boot.kernelPackages.callPackage ../../packages/tuxedo-drivers {})
-    ];
+
+    #extraModulePackages = [
+            #(config.boot.kernelPackages.callPackage ../../packages/tuxedo-drivers {})
+    #];
+    #extraModprobeConfig = ''
+    #  options tuxedo-keyboard kbd_backlight_mode=0
+    #'';
   };
 
   #powerManagement = {

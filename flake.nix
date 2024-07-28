@@ -40,8 +40,8 @@
 	  ./modules/virt-manager.nix
 	  ./modules/gaming.nix
 	  ./modules/various_programs.nix
-	  ./modules/tuxedo.nix
-	  nixpkgs-nomispaz.nixosModules.default
+	  #./modules/tuxedo.nix
+	  #nixpkgs-nomispaz.nixosModules.default
         ];
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
