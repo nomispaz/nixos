@@ -41,7 +41,7 @@ in
         "tuxedo_compatibility_check"
         "tuxedo_io"
       ];
-      boot.kernelPackages = [ "tuxedo-drivers" ];
-      boot.extraModulePackages = [ tuxedo-drivers ];
+      #boot.kernelPackages = [ "tuxedo-drivers" ];
+      #boot.extraModulePackages = [ config.boot.kernelPackages.tuxedo-drivers ];
     };
   }

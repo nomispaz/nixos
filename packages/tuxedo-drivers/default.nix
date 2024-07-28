@@ -18,7 +18,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "tuxedocomputers/development/packages";
     repo = "tuxedo-drivers";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-IZ1K7n4OrhI52u7EH0ljVkKwc/uf53sMd9qpTLjvzls=";
+    hash = "sha256-hZ4fY6TQj4YIOzFH+iZq90VPr87KIzke4N2PiJGYeEE=";
   };
 
   patches = [
