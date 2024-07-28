@@ -55,13 +55,16 @@
 
   # linux kernel
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_9;
+    kernelPackages = pkgs.linuxPackages_6_10;
     kernelParams = [
       "mitigations=auto"
       "security=apparmor"
       "tuxedo_keyboard.mode=0"
       "tuxedo_keyboard.brightness=25"
       "tuxedo_keyboard.color_left=0x0000ff"
+    ];
+    extraModulePackages = [
+      (config.boot.kernelPackages.callPackage ../../packages/tuxedo-drivers {})
     ];
   };
 
@@ -251,7 +254,7 @@
     meld
     ranger
     font-awesome
-    linuxKernel.packages.linux_6_9.cpupower
+    linuxKernel.packages.linux_6_10.cpupower
     brave
     networkmanagerapplet
     go

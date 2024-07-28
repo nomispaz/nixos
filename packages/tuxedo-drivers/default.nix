@@ -1,24 +1,24 @@
-{ pkgs ? import <nixpkgs> { system = builtins.currentSystem; }
-, lib ? pkgs.lib
-, stdenv ? pkgs.stdenv
-, kernel ? pkgs.linux_latest
-, fetchFromGitLab ? pkgs.fetchFromGitLab
-, fetchpatch ? pkgs.fetchpatch
-, kmod ? pkgs.kmod
-, pahole ? pkgs.pahole
-}:
+#{ pkgs ? import <nixpkgs> { system = builtins.currentSystem; }
+#, lib ? pkgs.lib
+#, stdenv ? pkgs.stdenv
+#, kernel ? pkgs.linux_latest
+#, fetchFromGitLab ? pkgs.fetchFromGitLab
+#, fetchpatch ? pkgs.fetchpatch
+#, kmod ? pkgs.kmod
+#, pahole ? pkgs.pahole
+#}:
 
-# { lib, stdenv, fetchFromGitLab, kernel, kmod, pahole }:
+{ lib, stdenv, fetchFromGitLab, kernel, kmod, pahole }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tuxedo-drivers-${kernel.version}";
-  version = "4.6.1";
+  version = "4.4.1";
 
   src = fetchFromGitLab {
     owner = "tuxedocomputers/development/packages";
     repo = "tuxedo-drivers";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-hZ4fY6TQj4YIOzFH+iZq90VPr87KIzke4N2PiJGYeEE=";
+    hash = "sha256-Bqxz4/3Oe9RAL0+7ZLFTkMF/EBnVkKA+ClzFd+D79WM=";
   };
 
   patches = [

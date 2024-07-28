@@ -12,11 +12,11 @@
     tuxedo-drivers.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
+#  environment.systemPackages = with pkgs; [
     #linuxKernel.packages.linux_latest.tuxedo-keyboard
-    curl (callPackage ../packages/tuxedo-drivers/default.nix {})
+#    curl (callPackage ../packages/tuxedo-drivers/default.nix {})
     #nixpkgs-nomispaz.tuxedo-drivers
-  ];
+#  ];
 
   hardware.tuxedo-rs = {
     enable = true;
