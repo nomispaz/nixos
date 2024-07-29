@@ -40,6 +40,8 @@
 	  ./modules/virt-manager.nix
 	  ./modules/gaming.nix
 	  ./modules/various_programs.nix
+	  ./modules/sway.nix
+	  ./modules/extrabootentries.nix
 	  #./modules/tuxedo.nix
 	  #nixpkgs-nomispaz.nixosModules.default
         ];
@@ -51,6 +53,7 @@
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
           ./hosts/vmqemu/configuration.nix
 	  ./modules/users.nix
+	  ./modules/sway.nix
 	];
       };
     };

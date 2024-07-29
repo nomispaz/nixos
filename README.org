@@ -1,4 +1,44 @@
-* Commands
+* Installation
+** Clone nixos repository
+#+BEGIN_SRC 
+git clone https://github.com/nomispaz/nixos & cd nixos
+#+END_SRC
+** Create partition layout
+- My layout can be found in the cloned repository.
+  #+BEGIN_SRC 
+  chmod +x prepare_drives.sh
+  #+END_SRC
+
+- Uncomment the following lines if the drive is empty or the selected partitions should be formatted.
+  #+BEGIN_SRC 
+  # if mklabel is created, all existing partitions on the drive are lost (use only on completely empty drive)
+  parted /dev/$installDrive mklabel gpt
+  # the following two lines would format the selected drives
+  mkfs.vfat -F 32 /dev/$efiDrive
+  mkfs.btrfs /dev/$rootDrive
+  #+END_SRC
+
+- Execute the skript
+  #+BEGIN_SRC 
+  sudo ./prepare_drives.sh
+  #+END_SRC
+
+- Now that the drives are set up and mounted, the nixos config can be created
+  #+BEGIN_SRC
+  sudo nixos-generate-config --root /mnt
+  #+END_SRC
+
+- if a new type of host is used, create a new host-entry unter hosts (copy an existing one as a template) and change the hostname in the configuration.nix. Include the new host in the flake.nix
+- if the instal is done on a new hardware configuration, copy only the hardware configuration to the cloned repo (all other conigs are taken from the repo)
+  #+BEGIN_SRC 
+  sudo cp /mnt/etc/nixos/hardware_configuration.nix ./hosts/<yourhost>/
+  #+END_SRC
+
+- install nixos
+  #+BEGIN_SRC 
+  sudo nixos-install --flake .#<yourhost>
+  #+END_SRC
+* Useful nix and nixos commands
 ** Show installed packages in store
 #+BEGIN_SRC lang
 nix-store --query --requisites /run/current-system/ | cut -d- -f2- | sort | uniq | grep discord

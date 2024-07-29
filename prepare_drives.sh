@@ -4,7 +4,7 @@ echo "set install drive to: "
 read installDrive
 
 echo "Create partition table (only do this if no partition table exists!)"
-parted /dev/$installDrive mklabel gpt
+# parted /dev/$installDrive mklabel gpt
 
 echo "Create partitions"
 parted /dev/$installDrive mkpart primary fat32 3MB 515MB
@@ -19,8 +19,8 @@ echo "set root drive to: "
 read rootDrive
 
 echo "format partitions"
-mkfs.vfat -F 32 /dev/$efiDrive
-mkfs.btrfs /dev/$rootDrive
+# mkfs.vfat -F 32 /dev/$efiDrive
+# mkfs.btrfs /dev/$rootDrive
 
 echo "mount installDrive to /mnt"
 mount -o noatime,compress=zstd /dev/$rootDrive /mnt
@@ -32,8 +32,8 @@ btrfs subvolume create /mnt/nix
 btrfs subvolume create /mnt/snapshots
 btrfs subvolume create /mnt/var_log
 
-#echo "subolume for swap-file"
-#btrfs subvolume create /mnt/swap
+echo "subolume for swap-file"
+btrfs subvolume create /mnt/swap
 
 echo "unmount installDrive"
 umount /mnt
