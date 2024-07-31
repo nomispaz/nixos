@@ -16,7 +16,8 @@
     open = true;
     nvidiaSettings = true;
     dynamicBoost.enable = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = pkgs.unstable.linuxKernel.packages.linux_6_10.nvidia_x11;
     prime = {
       offload = {
         enable = true;

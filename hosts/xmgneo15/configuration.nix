@@ -179,7 +179,7 @@
     neovim = {
       enable = true;
       defaultEditor = true;
-      package = pkgs.neovim-unwrapped;
+      package = pkgs.unstable.neovim-unwrapped;
       withPython3 = true;
     };
     git = {
@@ -195,7 +195,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     btrfs-progs
-    stable.vim
+    vim
     emacs
     screenfetch
     gcc
@@ -223,6 +223,7 @@
     gopls
     pciutils
     kdePackages.kwallet-pam
+    ripgrep
   ];
 
   # Set the default editor to vim
@@ -253,12 +254,12 @@
   };
 
   # enable opengl and vpdau/vpaapi
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
       vaapiVdpau
     ];
-    enable32Bit = true;
+    driSupport32Bit = true;
   };
 
   #nvidia hardware PCI-IDs for nvidia-offload
