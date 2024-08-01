@@ -11,7 +11,15 @@
     ];
 
   # define hostname
-  networking.hostName = "vmqemu";
+  networking.hostName = "vm";
+
+  # virtualisation
+  # virtualbox
+  virtualisation.virtualbox.guest.enable = true;
+  virtualisation.virtualbox.guest.draganddrop = true;
+  virtualisation.virtualbox.guest.clipboard = true;
+  services.xserver.videoDrivers = [ "vmware" ];
+
 
 # Bootloader.
   boot.loader = {
@@ -162,56 +170,10 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # configs for programs
-  programs = {
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      package = pkgs.neovim-unwrapped;
-      withPython3 = true;
-    };
-    git = {
-      enable = true;
-    };
-    fish.enable = true;
-    htop.enable = true;
-    firefox.enable = true;
-
-  };
-  
+ 
   # List packages installed in system profile. To search, run:
   # $ nix search nixpkgs wget
   environment.systemPackages = with pkgs; [
-    btrfs-progs
-    vim
-    emacs
-    screenfetch
-    gcc
-    wget
-    alacritty
-    python3
-    curl
-    gnugrep
-    xdg-utils
-    xdg-user-dirs
-    snapper
-    egl-wayland
-    keepassxc
-    veracrypt
-    vlc
-    flatpak
-    testdisk
-    meld
-    ranger
-    font-awesome
-    linuxKernel.packages.linux_6_9.cpupower
-    brave
-    networkmanagerapplet
-    go
-    gopls
-    pciutils
-    kdePackages.kwallet-pam
   ];
 
   # Set the default editor to vim
@@ -242,12 +204,12 @@
   };
 
   # enable opengl and vpdau/vpaapi
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
       vaapiVdpau
     ];
-    enable32Bit = true;
+    driSupport32Bit = true;
   };
 
   system.stateVersion = "24.05";

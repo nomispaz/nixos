@@ -173,57 +173,10 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # configs for programs
-  programs = {
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      package = pkgs.unstable.neovim-unwrapped;
-      withPython3 = true;
-    };
-    git = {
-      enable = true;
-    };
-    fish.enable = true;
-    htop.enable = true;
-    firefox.enable = true;
-
-  };
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    btrfs-progs
-    vim
-    emacs
-    screenfetch
-    gcc
-    wget
-    alacritty
-    python3
-    curl
-    gnugrep
-    xdg-utils
-    xdg-user-dirs
-    snapper
-    egl-wayland
-    keepassxc
-    veracrypt
-    vlc
-    flatpak
-    testdisk
-    meld
-    ranger
-    font-awesome
-    linuxKernel.packages.linux_6_10.cpupower
-    brave
-    networkmanagerapplet
-    go
-    gopls
-    pciutils
-    kdePackages.kwallet-pam
-    ripgrep
   ];
 
   # Set the default editor to vim

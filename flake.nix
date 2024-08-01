@@ -2,7 +2,7 @@
   description = "Masterflake";
 
   inputs = {
-    # NixOS official package source, using the nixos-23.11 branch here
+    # NixOS official package source
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # nixpkgs-nomispaz = {
@@ -42,18 +42,20 @@
 	  ./modules/various_programs.nix
 	  ./modules/sway.nix
 	  ./modules/extrabootentries.nix
+	  ./modules/basic_programs.nix
 	  #./modules/tuxedo.nix
 	  #nixpkgs-nomispaz.nixosModules.default
         ];
       };
-      nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
+      nixosConfigurations."vm" = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           # Overlays-module makes "pkgs.stable" available in configuration.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
-          ./hosts/vmqemu/configuration.nix
+          ./hosts/vm/configuration.nix
 	  ./modules/users.nix
 	  ./modules/sway.nix
+	  ./modules/basic_programs.nix
 	];
       };
     };
