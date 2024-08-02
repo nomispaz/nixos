@@ -5,17 +5,17 @@
     # NixOS official package source
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixpkgs-nomispaz = {
-    #     #url = "github:nomispaz/nixos_repo";
-    #     url = "./packages";
-    #     flake = true;
-    #     # Avoid pulling in the nixpkgs that we pin in the tuxedo-nixos repo.
-    #     # This should give the least surprises and saves on disk space.
-    #     inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    nixpkgs-nomispaz = {
+        #url = "github:nomispaz/nixos_repo";
+        url = "./packages";
+        flake = true;
+        # Avoid pulling in the nixpkgs that we pin in the tuxedo-nixos repo.
+        # This should give the least surprises and saves on disk space.
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-nomispaz, ... }:
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -43,8 +43,8 @@
 	  ./modules/sway.nix
 	  ./modules/extrabootentries.nix
 	  ./modules/basic_programs.nix
-	  #./modules/tuxedo.nix
-	  #nixpkgs-nomispaz.nixosModules.default
+	  ./modules/tuxedo.nix
+	  nixpkgs-nomispaz.nixosModules.default
         ];
       };
       nixosConfigurations."vm" = nixpkgs.lib.nixosSystem {

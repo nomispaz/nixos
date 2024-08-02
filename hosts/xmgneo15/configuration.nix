@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -60,13 +60,15 @@
       "security=apparmor"
     ];
 
-    #extraModulePackages = [
-            #(config.boot.kernelPackages.callPackage ../../packages/tuxedo-drivers {})
-    #];
-    #extraModprobeConfig = ''
-    #  options tuxedo-keyboard kbd_backlight_mode=0
-    #'';
+    extraModulePackages = [
+            (config.boot.kernelPackages.callPackage ../../packages/tuxedo-drivers {})
+    ];
+    extraModprobeConfig = ''
+      options tuxedo-keyboard kbd_backlight_mode=0
+    '';
   };
+
+  systemd.services."systemd-backlight@leds:kbd_backlight".enable = lib.mkForce false;
 
   #powerManagement = {
   #  enable = true;
@@ -204,6 +206,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
     enable = true;
+    trustedInterfaces = [ "virbr0" ];
   };
 
   # enable opengl and vpdau/vpaapi

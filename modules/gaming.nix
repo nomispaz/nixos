@@ -6,13 +6,14 @@
 
   programs.steam = {
       enable = true;
+      package = pkgs.unstable.steam;
   };
 
   environment.systemPackages = with pkgs; [
-    winetricks
-    wine
-    mangohud
-    lutris
+    unstable.winetricks
+    unstable.wine
+    unstable.mangohud
+    unstable.lutris
   ];
 
 }

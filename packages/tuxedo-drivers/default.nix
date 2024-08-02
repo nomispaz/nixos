@@ -12,7 +12,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tuxedo-drivers-${kernel.version}";
-  version = "4.4.1";
+  version = "4.4.3";
 
   src = fetchFromGitLab {
     owner = "tuxedocomputers/development/packages";
@@ -30,8 +30,8 @@ stdenv.mkDerivation (finalAttrs: {
     ../../overlays/patches/tuxedo-keyboard/fix-dot-owner.patch
   ];
 
-  buildInputs = [ pahole ];
-  nativeBuildInputs = [ kmod ] ++ kernel.moduleBuildDependencies;
+  #buildInputs = [ pahole ];
+  #nativeBuildInputs = [ kmod ] ++ kernel.moduleBuildDependencies;
 
   makeFlags = kernel.makeFlags ++ [
     "KERNELRELEASE=${kernel.modDirVersion}"
