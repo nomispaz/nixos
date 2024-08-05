@@ -172,8 +172,30 @@
   environment.systemPackages = with pkgs; [
   ];
 
+  services.xserver.windowManager.i3 = {
+    enable = true;
+    extraPackages = with pkgs; [
+      i3status
+      rofi
+      dunst
+    ];
+  };
+
   # Set the default editor to vim
   environment.variables.EDITOR = "nvim";
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  # List services that you want to enable:
+
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
 
   #firewall
   networking.nftables.enable = true;

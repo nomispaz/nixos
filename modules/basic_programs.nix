@@ -35,7 +35,6 @@
     pciutils
     kdePackages.kwallet-pam
     ripgrep
-    rpmextract
   ];
 
   # configs for programs
