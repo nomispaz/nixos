@@ -3,8 +3,8 @@
 
   inputs = {
     # NixOS official package source
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
      #nixpkgs-nomispaz = {
      #     url = "./packages";
      #     flake = true;
@@ -14,15 +14,15 @@
      #};
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }:
+  outputs = { self, nixpkgs, nixpkgs-stable, ... }:
     let
       system = "x86_64-linux";
-      overlay-unstable = final: prev: {
-          unstable = import nixpkgs-unstable {
+      overlay-stable = final: prev: {
+          stable = import nixpkgs-stable {
           inherit system;
           config.allowUnfree = true;
         };
-      };    
+      };  
     in {
       nixConfig = {
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -31,7 +31,7 @@
         inherit system;
         modules = [
           # Overlays-module makes "pkgs.unstable" available in configuration.nix
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
           ./hosts/xmgneo15/configuration.nix
 	  ./modules/users.nix
 	  ./modules/nvidia.nix
@@ -49,7 +49,7 @@
         inherit system;
         modules = [
           # Overlays-module makes "pkgs.unstable" available in configuration.nix
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
           ./hosts/vm/configuration.nix
 	  ./modules/users.nix
 	  ./modules/sway.nix
