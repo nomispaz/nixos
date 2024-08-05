@@ -12,7 +12,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tuxedo-drivers-${kernel.version}";
-  version = "4.4.3";
+  version = "4.4.1";
 
   src = fetchFromGitLab {
     owner = "tuxedocomputers/development/packages";
@@ -22,22 +22,22 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   patches = [
-    #(fetchpatch {
-    #  name = "fix-dot-owner.patch";
-    #  url = "https://raw.githubusercontent.com/nomispaz/nixos/main/overlays/patches/tuxedo-keyboard/fix-dot-owner.patch";
-    #  hash = "sha256-VO420pPu9wQSJf23p+VcTl1oN2ImVwuoSdBWKA56JpE=";
-    #})
     ../../overlays/patches/tuxedo-keyboard/fix-dot-owner.patch
   ];
 
-  #buildInputs = [ pahole ];
-  #nativeBuildInputs = [ kmod ] ++ kernel.moduleBuildDependencies;
+  buildInputs = [ pahole ];
+  nativeBuildInputs = [ kmod ] ++ kernel.moduleBuildDependencies;
 
   makeFlags = kernel.makeFlags ++ [
     "KERNELRELEASE=${kernel.modDirVersion}"
     "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
     "INSTALL_MOD_PATH=$(out)"
   ];
+
+  #installPhase = ''
+  #  mkdir -p $out/etc/udev/rules.d
+  #  cp ./99-z-tuxedo-systemd-fix.rules $out/etc/udev/rules.d/
+  #'';
 
   meta = {
     broken = stdenv.isAarch64 || (lib.versionOlder kernel.version "5.5");

@@ -1,3 +1,3 @@
 {
-  module = import ./tuxedo-drivers/tuxedo-drivers.nix;
+  module = import ./tuxedo-keyboard/tuxedo-keyboard.nix
 }

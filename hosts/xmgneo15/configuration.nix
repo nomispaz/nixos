@@ -29,8 +29,6 @@
   # activate flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -60,15 +58,10 @@
       "security=apparmor"
     ];
 
-    extraModulePackages = [
-            (config.boot.kernelPackages.callPackage ../../packages/tuxedo-drivers {})
-    ];
     extraModprobeConfig = ''
       options tuxedo-keyboard kbd_backlight_mode=0
     '';
   };
-
-  systemd.services."systemd-backlight@leds:kbd_backlight".enable = lib.mkForce false;
 
   #powerManagement = {
   #  enable = true;
@@ -132,8 +125,6 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     wireplumber.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
   };
 
   security = {
@@ -183,19 +174,6 @@
 
   # Set the default editor to vim
   environment.variables.EDITOR = "nvim";
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   #firewall
   networking.nftables.enable = true;

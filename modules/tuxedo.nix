@@ -2,25 +2,32 @@
 
 {
 
-  disabledModules = [ "hardware/tuxedo-keyboard.nix" ];
+  imports = [
+    #../packages/tuxedo-keyboard/tuxedo-keyboard.nix
+    #../packages/tuxedo-control-center/tuxedo-control-center.nix
+    #../packages/tuxedo-drivers/tuxedo-drivers.nix
+  ];
 
-  hardware = {
-    tuxedo-drivers.enable = true;
-  };
+  #disabledModules = [ "hardware/tuxedo-keyboard.nix" ];
 
-  services.udev.extraRules =
-  ''
-    SUBSYSTEM=="leds", KERNEL=="*kbd_backlight*", TAG-="systemd"
-    SUBSYSTEM=="leds", KERNEL=="*kbd_backlight", TAG+="systemd"
-    SUBSYSTEM=="leds", KERNEL=="*kbd_backlight_1", TAG+="systemd"
-    SUBSYSTEM=="leds", KERNEL=="*kbd_backlight_2", TAG+="systemd"
-    SUBSYSTEM=="leds", KERNEL=="*kbd_backlight_3", TAG+="systemd"
-  '';
-
-#hardware.tuxedo-rs = {
-  #  enable = true;
-  #  tailor-gui.enable = true;
+  #hardware = {
+  #  tuxedo-keyboard.enable = true;
+  #  tuxedo-drivers.enable = true;
   #};
 
+  services.udev.extraRules = builtins.readFile ../packages/tuxedo-drivers/99-z-tuxedo-systemd-fix.rules;
+
+  environment.systemPackages = with pkgs; [
+    #(config.boot.kernelPackages.callPackage ../packages/tuxedo-control-center {})
+  ];
+
+  #hardware.tuxedo-control-center = {
+  #  enable = true;
+  #};
+
+ #hardware.tuxedo-rs = {
+ #   enable = true;
+ #   tailor-gui.enable = true;
+ # };
 
 }

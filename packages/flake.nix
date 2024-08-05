@@ -7,7 +7,7 @@
 
   outputs = { self, nixpkgs }: {
     packages.x86_64-linux.default = 
-      (import nixpkgs).pkgs.callPackage ./tuxedo-drivers {};
-    nixosModules.default = import ./tuxedo-drivers/tuxedo-drivers.nix;
+      (import nixpkgs).pkgs.callPackage ./tuxedo-keyboard {};
+    nixosModules.default = import ./tuxedo-keyboard/tuxedo-keyboard.nix;
   };
 }
