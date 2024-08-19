@@ -6,10 +6,10 @@
 
   programs.steam = {
       enable = true;
-      #package = pkgs.unstable.steam;
+      package = pkgs.unstable.steam;
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs.unstable; [
     winetricks
     wine
     mangohud
