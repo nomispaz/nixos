@@ -56,5 +56,27 @@
 	  ./modules/basic_programs.nix
 	];
       };
+      nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          # Overlays-module makes "pkgs.unstable" available in configuration.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
+          ./hosts/vmqemu/configuration.nix
+	  ./modules/users.nix
+	  ./modules/sway.nix
+	  ./modules/basic_programs.nix
+	];
+      };
+      nixosConfigurations."trekstor" = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          # Overlays-module makes "pkgs.unstable" available in configuration.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-stable ]; })
+          ./hosts/trekstor/configuration.nix
+	  ./modules/users.nix
+	  ./modules/sway.nix
+	  ./modules/basic_programs.nix
+	];
+      };
     };
 }

@@ -7,8 +7,22 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./filesystems.nix
+      ../filesystems.nix
     ];
+
+  # file system of second ssd
+  fileSystems."/mnt/nvme2" =
+    { device = "/dev/disk/by-uuid/5478d2bc-1d51-467f-b488-87fed42efffb";
+      fsType = "btrfs";
+      options = [        
+	"rw"
+        "noatime"
+        "compress=zstd:3"
+        "ssd"
+        "discard=async"
+        "space_cache=v2"
+      ];
+    };
 
 # define hostname
   networking.hostName = "xmgneo15";

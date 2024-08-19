@@ -22,7 +22,6 @@
     keepassxc
     veracrypt
     vlc
-    flatpak
     testdisk
     meld
     ranger
@@ -53,6 +52,8 @@
     firefox.enable = true;
 
   };
+
+  services.flatpak.enable = true;
 
 
 }
