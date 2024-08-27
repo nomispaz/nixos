@@ -24,6 +24,15 @@
       ];
     };
 
+  fileSystems."/mnt/nvme2_xfs" =
+    { device = "/dev/disk/by-uuid/ce299340-d7ca-48fc-9320-d8ebaeb23898";
+      fsType = "xfs";
+      options = [        
+	"defaults"
+	"noatime"
+      ];
+    };
+
 # define hostname
   networking.hostName = "xmgneo15";
 
