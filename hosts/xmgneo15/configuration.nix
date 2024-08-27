@@ -66,12 +66,6 @@
 
   # linux kernel
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_10;
-    kernelParams = [
-      "mitigations=auto"
-      "security=apparmor"
-    ];
-
     extraModprobeConfig = ''
       options tuxedo-keyboard kbd_backlight_mode=0
     '';

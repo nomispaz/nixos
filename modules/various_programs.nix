@@ -10,6 +10,7 @@
     obs-studio
     thunderbird
     libreoffice
+    asunder
   ];
 
 }

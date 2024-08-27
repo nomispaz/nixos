@@ -43,6 +43,7 @@
 	  ./modules/extrabootentries.nix
 	  ./modules/basic_programs.nix
 	  ./modules/tuxedo.nix
+	  ./modules/kernel.nix
 	];
       };
       nixosConfigurations."vm" = nixpkgs.lib.nixosSystem {
@@ -54,6 +55,7 @@
 	  ./modules/users.nix
 	  ./modules/sway.nix
 	  ./modules/basic_programs.nix
+	  ./modules/kernel.nix
 	];
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
@@ -65,6 +67,7 @@
 	  ./modules/users.nix
 	  ./modules/sway.nix
 	  ./modules/basic_programs.nix
+	  ./modules/kernel.nix
 	];
       };
       nixosConfigurations."trekstor" = nixpkgs.lib.nixosSystem {
@@ -76,6 +79,7 @@
 	  ./modules/users.nix
 	  ./modules/sway.nix
 	  ./modules/basic_programs.nix
+	  ./modules/kernel.nix
 	];
       };
     };
