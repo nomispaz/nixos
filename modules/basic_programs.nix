@@ -7,7 +7,19 @@
   environment.systemPackages = with pkgs; [
     btrfs-progs
     vim
-    emacs
+    #emacs
+    ((emacsPackagesFor emacs).emacsWithPackages (
+      epkgs: [ epkgs.catppuccin-theme
+	       epkgs.yasnippet
+	       epkgs.yasnippet-snippets
+	       epkgs.company
+	       epkgs.consult
+	       epkgs.breadcrumb
+	       epkgs.go-mode
+	       epkgs.rust-mode
+	       epkgs.evil
+	]
+    ))
     screenfetch
     gcc
     wget
