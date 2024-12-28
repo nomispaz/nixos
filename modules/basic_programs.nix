@@ -26,7 +26,7 @@
     meld
     ranger
     font-awesome
-    cpupower
+    linuxPackages.cpupower
     brave
     networkmanagerapplet
     go
