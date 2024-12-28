@@ -210,7 +210,7 @@
     extraPackages = with pkgs; [
       vaapiVdpau
     ];
-    enable32bit = true;
+    enable32Bit = true;
   };
 
   #nvidia hardware PCI-IDs for nvidia-offload
