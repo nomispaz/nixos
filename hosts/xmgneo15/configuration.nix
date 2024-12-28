@@ -210,8 +210,8 @@
     extraPackages = with pkgs; [
       vaapiVdpau
     ];
+    enable32bit = true;
   };
-  hardware.opengl.driSupport32Bit = true;
 
   #nvidia hardware PCI-IDs for nvidia-offload
   hardware.nvidia = {

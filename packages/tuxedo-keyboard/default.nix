@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { system = builtins.currentSystem; }
 , lib ? pkgs.lib
 , stdenv ? pkgs.stdenv
-, kernel ? pkgs.linux_6_10
+, kernel ? pkgs.linux_latest
 , fetchFromGitHub ? pkgs.fetchFromGitHub
 , fetchpatch ? pkgs.fetchpatch
 , kmod ? pkgs.kmod
