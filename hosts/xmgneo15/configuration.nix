@@ -205,7 +205,7 @@
   };
 
   # enable opengl and vpdau/vpaapi
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       vaapiVdpau
