@@ -6,7 +6,7 @@
 
   # linux kernel
   boot = {
-    kernelPackages = pkgs.unstable.linuxPackages_6_12;
+    kernelPackages = pkgs.unstable.linuxPackages_latest;
     kernelParams = [
       "mitigations=auto"
       "security=apparmor"
