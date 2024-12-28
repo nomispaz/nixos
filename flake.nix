@@ -42,7 +42,7 @@
 	  ./modules/sway.nix
 	  ./modules/extrabootentries.nix
 	  ./modules/basic_programs.nix
-	  ./modules/tuxedo.nix
+	#  ./modules/tuxedo.nix
 	  ./modules/kernel.nix
 	];
       };
