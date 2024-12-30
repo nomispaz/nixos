@@ -61,8 +61,18 @@
     };
     fish.enable = true;
     htop.enable = true;
-    firefox.enable = true;
-
+    firefox = {
+      enable = true;
+      policies = {
+        Extensions = {
+          # Enforce the installation of Privacy Badger and uBlock Origin
+          Install = [
+            "https://addons.mozilla.org/firefox/downloads/file/4321653/privacy_badger17-latest.xpi"
+            "https://addons.mozilla.org/firefox/downloads/file/4391011/ublock_origin-latest.xpi"
+          ];
+        };
+    };
+    };
   };
 
   services.flatpak.enable = true;

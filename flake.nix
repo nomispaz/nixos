@@ -5,13 +5,13 @@
     # NixOS official package source
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-     #nixpkgs-nomispaz = {
-     #     url = "./packages";
-     #     flake = true;
-     #     # Avoid pulling in the nixpkgs that we pin in the tuxedo-nixos repo.
-     #     # This should give the least surprises and saves on disk space.
-     #     inputs.nixpkgs.follows = "nixpkgs";
-     #};
+  #   nixpkgs-nomispaz = {
+  #        url = "./packages";
+  #        flake = true;
+  #        # Avoid pulling in the nixpkgs that we pin in the tuxedo-nixos repo.
+  #        # This should give the least surprises and saves on disk space.
+  #        inputs.nixpkgs.follows = "nixpkgs";
+  #   };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, ... }:
@@ -44,6 +44,8 @@
 	  ./modules/basic_programs.nix
 	#  ./modules/tuxedo.nix
 	  ./modules/kernel.nix
+	  ./modules/programming.nix
+	  ./modules/ai.nix
 	];
       };
       nixosConfigurations."vm" = nixpkgs.lib.nixosSystem {

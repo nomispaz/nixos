@@ -22,7 +22,8 @@ SUBSYSTEM=="leds", KERNEL=="*kbd_backlight_3", TAG+="systemd"
   ];
 
   environment.systemPackages = with pkgs; [
-    #(config.boot.kernelPackages.callPackage ../packages/tuxedo-control-center {})
+    (config.boot.kernelPackages.callPackage ../packages/tuxedo-control-center {})
+  #  (import ../packages/tuxedo-control-center)
   ];
 
   #hardware.tuxedo-control-center = {
