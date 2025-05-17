@@ -46,6 +46,8 @@
 	  ./modules/kernel.nix
 	  ./modules/programming.nix
 	  ./modules/ai.nix
+	  ./modules/gnome.nix
+	  ./modules/basic_system.nix
 	];
       };
       nixosConfigurations."vm" = nixpkgs.lib.nixosSystem {
@@ -58,6 +60,8 @@
 	  ./modules/sway.nix
 	  ./modules/basic_programs.nix
 	  ./modules/kernel.nix
+	  ./modules/gnome.nix
+	  ./modules/basic_system.nix
 	];
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
@@ -70,6 +74,8 @@
 	  ./modules/sway.nix
 	  ./modules/basic_programs.nix
 	  ./modules/kernel.nix
+	  ./modules/gnome.nix
+	  ./modules/basic_system.nix
 	];
       };
       nixosConfigurations."trekstor" = nixpkgs.lib.nixosSystem {
@@ -82,6 +88,8 @@
 	  ./modules/sway.nix
 	  ./modules/basic_programs.nix
 	  ./modules/kernel.nix
+	  ./modules/gnome.nix
+	  ./modules/basic_system.nix
 	];
       };
     };

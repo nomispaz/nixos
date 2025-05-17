@@ -26,6 +26,11 @@
     };
   };
 
+# enable sway on nvidia
+  programs.sway.extraOptions = [
+        "--unsupported-gpu"
+  ];
+
   nixpkgs.overlays = [
     # patch wlroots to prevent flickering on external monitor with nvidia
     (final: prev: {

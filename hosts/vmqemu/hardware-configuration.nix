@@ -4,51 +4,53 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ];
+  imports =
+    [ (modulesPath + "/profiles/qemu-guest.nix")
+    ];
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8b8326a2-84a9-4acc-87d6-6e30fb292108";
+    { device = "/dev/disk/by-uuid/16979358-e032-46d6-90ba-a88d555b6e78";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/8b8326a2-84a9-4acc-87d6-6e30fb292108";
+    { device = "/dev/disk/by-uuid/16979358-e032-46d6-90ba-a88d555b6e78";
       fsType = "btrfs";
       options = [ "subvol=home" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/8b8326a2-84a9-4acc-87d6-6e30fb292108";
+    { device = "/dev/disk/by-uuid/16979358-e032-46d6-90ba-a88d555b6e78";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
   fileSystems."/.snapshots" =
-    { device = "/dev/disk/by-uuid/8b8326a2-84a9-4acc-87d6-6e30fb292108";
+    { device = "/dev/disk/by-uuid/16979358-e032-46d6-90ba-a88d555b6e78";
       fsType = "btrfs";
       options = [ "subvol=snapshots" ];
     };
 
   fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/8b8326a2-84a9-4acc-87d6-6e30fb292108";
+    { device = "/dev/disk/by-uuid/16979358-e032-46d6-90ba-a88d555b6e78";
       fsType = "btrfs";
       options = [ "subvol=var_log" ];
     };
 
   fileSystems."/swap" =
-    { device = "/dev/disk/by-uuid/8b8326a2-84a9-4acc-87d6-6e30fb292108";
+    { device = "/dev/disk/by-uuid/16979358-e032-46d6-90ba-a88d555b6e78";
       fsType = "btrfs";
       options = [ "subvol=swap" ];
     };
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/3F68-032E";
+    { device = "/dev/disk/by-uuid/BA28-39B5";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
@@ -60,8 +62,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  virtualisation.virtualbox.guest.enable = true;
 }
