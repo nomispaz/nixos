@@ -44,7 +44,6 @@
     go
     gopls
     pciutils
-    kdePackages.kwallet-pam
     ripgrep
     rustup
   ];

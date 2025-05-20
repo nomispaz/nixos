@@ -48,6 +48,32 @@
 	  ./modules/ai.nix
 	  ./modules/gnome.nix
 	  ./modules/basic_system.nix
+	  ./modules/gnome_keyring.nix
+	  ./modules/bootloader.nix
+	];
+      };
+      nixosConfigurations."xmgneo15_external_drive" = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          # Overlays-module makes "pkgs.unstable" available in configuration.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+          ./hosts/xmgneo15_external_drive/configuration.nix
+	  ./modules/users.nix
+	  ./modules/nvidia.nix
+	  ./modules/amd.nix
+	  ./modules/virt-manager.nix
+	  ./modules/gaming.nix
+	  ./modules/various_programs.nix
+	  ./modules/sway.nix
+	  ./modules/extrabootentries.nix
+	  ./modules/basic_programs.nix
+	#  ./modules/tuxedo.nix
+	  ./modules/kernel.nix
+	  ./modules/programming.nix
+	  ./modules/ai.nix
+	  ./modules/gnome.nix
+	  ./modules/basic_system.nix
+	  ./modules/gnome_keyring.nix
 	];
       };
       nixosConfigurations."vm" = nixpkgs.lib.nixosSystem {
@@ -62,6 +88,8 @@
 	  ./modules/kernel.nix
 	  ./modules/gnome.nix
 	  ./modules/basic_system.nix
+	  ./modules/bootloader.nix
+	  ./modules/gnome_keyring.nix
 	];
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
@@ -76,6 +104,8 @@
 	  ./modules/kernel.nix
 	  ./modules/gnome.nix
 	  ./modules/basic_system.nix
+	  ./modules/bootloader.nix
+	  ./modules/gnome_keyring.nix
 	];
       };
       nixosConfigurations."trekstor" = nixpkgs.lib.nixosSystem {
@@ -90,6 +120,8 @@
 	  ./modules/kernel.nix
 	  ./modules/gnome.nix
 	  ./modules/basic_system.nix
+	  ./modules/bootloader.nix
+	  ./modules/gnome_keyring.nix
 	];
       };
     };

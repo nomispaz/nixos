@@ -1,19 +1,6 @@
 { config, pkgs, lib, ... }:
 {
 
-# Bootloader.
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi";
-    };
-    grub = {
-      device = "nodev";
-      efiSupport = true;
-      useOSProber = true;
-    };
-  };
-
   # activate flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -162,6 +149,12 @@
     ];
     enable32Bit = true;
   };
+
+  #fonts
+  fonts.packages = with pkgs; [ 
+    font-awesome
+    dejavu_fonts
+  ];
 
   system.stateVersion = "24.11";
 
