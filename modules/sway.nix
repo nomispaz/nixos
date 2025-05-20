@@ -23,6 +23,7 @@
         pavucontrol
         wlroots
 	waybar
+	nwg-panel
       ];
       extraSessionCommands = 
         ''

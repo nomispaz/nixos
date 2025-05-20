@@ -23,4 +23,16 @@
       dunst
     ];
   };
+
+  # use when a new kernel needs to be compiled for the trekstor device. The kernel is compiled on a different pc within the vm and then copied to the trekstor device
+  # required so that the silead touchscreen is calibrated correctly
+  boot.kernelPatches = [ {
+        name = "touch screen support";
+        patch = null;
+        extraStructuredConfig = with lib.kernel; {
+            TOUCHSCREEN_DMI = yes;
+  	    EFI_EMBEDDED_FIRMWARE = yes;
+          };                
+  } ];
+
 }

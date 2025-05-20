@@ -13,10 +13,34 @@
  hardware.firmware = [
    (pkgs.runCommand "gsl1680-trekstor-primebook-c13" { } ''
      mkdir -p $out/lib/firmware/silead
-     cp -r ${./gsl1680-trekstor-primebook-c13.fw} $out/lib/firmware/silead/mssl1680.fw
+     cp -r ${./gsl1680-trekstor-primebook-c13.fw} $out/lib/firmware/silead/gsl1680-trekstor-primebook-c13.fw
    '')
  ];
 
+  # linux kernel
+  # use stable kernel so that recompiling is not required that often
+  boot = {
+    #kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelParams = [
+      "mitigations=auto"
+      "security=apparmor"
+    ];
+  };
+
+services.libinput.enable = true;
+
+  # paramters are disabled because the compilations will happen on a different host
+  #boot.kernelPatches = [
+  #      {
+  #        name = "touchscreen support";
+  #        patch = null;
+  #        extraStructuredConfig = with lib.kernel; {
+  #          TOUCHSCREEN_DMI = yes;
+  #	    EFI_EMBEDDED_FIRMWARE = yes;
+  #	  };
+  #	}
+  #    ];
+ 
   # define hostname
   networking.hostName = "trekstor";
 
