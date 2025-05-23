@@ -6,16 +6,16 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-  #   nixpkgs-nomispaz = {
-  #        url = "./packages";
-  #        flake = true;
-  #        # Avoid pulling in the nixpkgs that we pin in the tuxedo-nixos repo.
-  #        # This should give the least surprises and saves on disk space.
-  #        inputs.nixpkgs.follows = "nixpkgs";
-  #   };
+    nomispaz-linutil = {
+         url = "github:nomispaz/linutil";
+         flake = true;
+         # Avoid pulling in the nixpkgs that we pin in the tuxedo-nixos repo.
+         # This should give the least surprises and saves on disk space.
+         inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-stable, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-stable, ... } @ inputs:
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
@@ -30,12 +30,19 @@
 	    config.allowUnfree = true;
           };
       };
+      #overlay-nomispaz = final: prev: {
+      #    nomispaz = import nomispaz {
+      #      inherit system;
+      #	    config.allowUnfree = true;
+      #    };
+      #};
     in {
       nixosConfigurations."xmgneo15" = nixpkgs.lib.nixosSystem {
         inherit system;
+	specialArgs = { inherit inputs; };
         modules = [
           # Overlays-module makes "pkgs.unstable" available in configuration.nix
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable]; })
           ./hosts/xmgneo15/configuration.nix
 	  ./modules/users.nix
 	  ./modules/nvidia.nix
@@ -58,10 +65,11 @@
       # changed this host to unstable
       nixosConfigurations."xmgneo15_external_drive" = nixpkgs-unstable.lib.nixosSystem {
         inherit system;
+	specialArgs = { inherit inputs; };
         modules = [
           # Overlays-module makes "pkgs.unstable" available in configuration.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
-	  # set nixpkgs to unstable only for this host
+          # set nixpkgs to unstable only for this host
 	  { nixpkgs.config.pkgs = import nixpkgs-unstable;}
           ./hosts/xmgneo15_external_drive/configuration.nix
 	  ./modules/users.nix
@@ -79,10 +87,12 @@
 	  ./modules/gnome.nix
 	  ./modules/basic_system.nix
 	  ./modules/gnome_keyring.nix
+	  ./modules/linutil.nix
 	];
       };
       nixosConfigurations."vm" = nixpkgs.lib.nixosSystem {
         inherit system;
+	specialArgs = { inherit inputs; };
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
           ./hosts/xmgneo15_external_drive/configuration.nix
@@ -99,6 +109,7 @@
       };
       nixosConfigurations."vmqemu" = nixpkgs.lib.nixosSystem {
         inherit system;
+	specialArgs = { inherit inputs; };
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
           ./hosts/xmgneo15_external_drive/configuration.nix
@@ -115,6 +126,7 @@
       };
       nixosConfigurations."trekstor" = nixpkgs.lib.nixosSystem {
         inherit system;
+	specialArgs = { inherit inputs; };
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
           ./hosts/xmgneo15_external_drive/configuration.nix
