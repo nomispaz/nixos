@@ -1,3 +1,5 @@
+# https://nixos.wiki/wiki/Nvidia
+
 { config, pkgs, lib, ... }:
 
 {
@@ -19,6 +21,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     #package = unstable.linuxKernel.packages.linux_6_10.nvidia_x11;
     prime = {
+      sync.enable = false;
       offload = {
         enable = true;
 	enableOffloadCmd = true;
@@ -35,6 +38,16 @@
     # patch wlroots to prevent flickering on external monitor with nvidia
     (final: prev: {
       wlroots_0_17 = prev.wlroots_0_17.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+           (prev.fetchpatch {
+	    url = "https://raw.githubusercontent.com/nomispaz/nixos/c7570c47b3b340391a5a6c3f71f4cf9401a46b8a/overlays/patches/wlroots/wlroots-nvidia.patch";
+	    hash = "sha256-s9AYejh9hK5x+v+WWGeflgaSmCFBwFNUNMeeeIxfuPo=";
+		})
+        ];
+      });
+    })
+    (final: prev: {
+      wlroots_0_18 = prev.wlroots_0_18.overrideAttrs (old: {
         patches = (old.patches or []) ++ [
            (prev.fetchpatch {
 	    url = "https://raw.githubusercontent.com/nomispaz/nixos/c7570c47b3b340391a5a6c3f71f4cf9401a46b8a/overlays/patches/wlroots/wlroots-nvidia.patch";

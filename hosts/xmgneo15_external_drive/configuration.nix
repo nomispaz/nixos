@@ -22,6 +22,8 @@
         "ssd"
         "discard=async"
         "space_cache=v2"
+	"nofail"
+	"x-systemd.device-timeout=10"
       ];
     };
 
@@ -31,12 +33,15 @@
       options = [        
 	"defaults"
 	"noatime"
+	"nofail"
+	"x-systemd.device-timeout=10"
       ];
     };
 
   # Bootloader.
   boot.loader = {
     efi = {
+      canTouchEfiVariables = false;
       efiSysMountPoint = "/boot/efi";
     };
     grub = {
@@ -44,7 +49,7 @@
       efiInstallAsRemovable = true;
       device = "nodev";
       efiSupport = true;
-      useOSProber = true;
+      useOSProber = false;
     };
   };
  

@@ -6,10 +6,12 @@
 
   # linux kernel
   boot = {
-    #kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "mitigations=auto"
-      "security=apparmor"
+      "amd_pstate=active"
+    # disabled since in 25.05, this cannot be added to kernel if activated in security
+    #  "security=apparmor"
     ];
   };
 
