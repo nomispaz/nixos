@@ -48,6 +48,26 @@
         "type": "github"
       }
     },
+    "nomispaz-cpupower_go": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1748074626,
+        "narHash": "sha256-GAxQcDuRiPbHcph89EwfpIUXsFYZEqSTqivSa92lTLU=",
+        "owner": "nomispaz",
+        "repo": "cpupower_go",
+        "rev": "b40a7c6df39c14d4e275e2999e29340482f8ed7a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nomispaz",
+        "repo": "cpupower_go",
+        "type": "github"
+      }
+    },
     "nomispaz-linutil": {
       "inputs": {
         "nixpkgs": [
@@ -55,11 +75,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748007122,
-        "narHash": "sha256-CXjVRDWqhe2vdJblGnDF9JH+fIOlVMlr1y4GLR/Ss00=",
+        "lastModified": 1748012793,
+        "narHash": "sha256-VwEQ5d1RSoGQF3/KUzIPOs4htxakMhJTHPgbkC9RF4Y=",
         "owner": "nomispaz",
         "repo": "linutil",
-        "rev": "ece3c7fa5cdb0808de266a63199f8476cca1c689",
+        "rev": "b3e63a4c7521e8869eaf39fe9ef83e5ccac2500b",
         "type": "github"
       },
       "original": {
@@ -73,6 +93,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nomispaz-cpupower_go": "nomispaz-cpupower_go",
         "nomispaz-linutil": "nomispaz-linutil"
       }
     }

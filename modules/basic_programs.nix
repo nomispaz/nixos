@@ -18,6 +18,7 @@
 	       epkgs.go-mode
 	       epkgs.rust-mode
 	       epkgs.evil
+	       epkgs.nix-mode
 	]
     ))
     screenfetch
@@ -46,6 +47,8 @@
     pciutils
     ripgrep
     rustup
+    # nix language server
+    nil
   ];
 
   # configs for programs

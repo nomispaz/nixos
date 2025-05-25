@@ -21,11 +21,11 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     #package = unstable.linuxKernel.packages.linux_6_10.nvidia_x11;
     prime = {
-      sync.enable = false;
+      sync.enable = true;
       offload = {
-        enable = true;
-	enableOffloadCmd = true;
-	};
+        enable = false;
+	      enableOffloadCmd = false;
+	    };
     };
   };
 
