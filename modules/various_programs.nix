@@ -14,4 +14,7 @@
     rclone
   ];
 
+  # activate flatpak
+  services.flatpak.enable = true;
+
 }

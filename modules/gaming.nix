@@ -14,6 +14,7 @@
     wine
     mangohud
     lutris
+    heroic-unwrapped
   ];
 
 }
