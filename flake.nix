@@ -71,7 +71,7 @@
       #
       #############################################################################################
       
-      nixosConfigurations."xmgneo15" = nixpkgs.lib.nixosSystem {
+      nixosConfigurations."xmgneo15" = nixpkgs-unstable.lib.nixosSystem {
         inherit system;
 	      specialArgs = { inherit inputs; };
         modules = [
