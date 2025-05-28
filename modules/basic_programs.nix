@@ -46,7 +46,6 @@
     gopls
     pciutils
     ripgrep
-    rustup
     # nix language server
     nil
   ];

@@ -151,6 +151,9 @@
     enable32Bit = true;
   };
 
+  # enable nfts
+  boot.supportedFilesystems = [ "ntfs" ];
+
   #fonts
   fonts.packages = with pkgs; [ 
     font-awesome

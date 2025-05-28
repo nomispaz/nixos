@@ -20,4 +20,13 @@
     ];
   };
 
+  # enable zenpower
+  boot.blacklistedKernelModules = [ "k10temp" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.zenpower ];
+  boot.kernelModules = [ "zenpower" ];
+
+  # enable tlp
+  services.power-profiles-daemon.enable = false;
+  services.tlp.enable = true;
+
 }

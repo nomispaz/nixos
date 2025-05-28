@@ -17,14 +17,14 @@
       flake = true;
       # Avoid pulling in the nixpkgs that we pin in the repo.
       # This should give the least surprises and saves on disk space.
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nomispaz-cpupower_go = {
       url = "github:nomispaz/cpupower_go";
       flake = true;
       # Avoid pulling in the nixpkgs that we pin in the repo.
       # This should give the least surprises and saves on disk space.
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 

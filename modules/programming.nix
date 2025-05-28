@@ -10,10 +10,12 @@
    gopls
    delve
    python312Packages.python-lsp-server
-   rust-analyzer
+   clippy
    rustc
    cargo
+   rustup
    rustfmt
+   rust-analyzer
    mdbook
    vscodium
   ];
