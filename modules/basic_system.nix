@@ -58,14 +58,16 @@
 
   hardware = {
     enableRedistributableFirmware = true;
-    # Disable pulseaudio since pipewire should be used
-    pulseaudio.enable = false;
+
     # bluetooth
     bluetooth = {
       enable = true;
       powerOnBoot = true;
     };
   };
+
+  # Disable pulseaudio since pipewire should be used
+  services.pulseaudio.enable = false;
   
   #blueman for bluetooth
   services.blueman.enable = true;

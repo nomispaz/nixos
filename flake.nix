@@ -4,6 +4,9 @@
   #############################################################################################
   #
   # Inputs
+  # in hosts configuration, "specialArgs = { inherit inputs; };" is used
+  # with this, packages of these inputs can be referenced in other nix-files via:
+  # inputs.<inputname>.packages.x86_64-linux.<package>
   #
   #############################################################################################
   
@@ -44,12 +47,16 @@
       #
       #############################################################################################
 
+      # unstable overlay
       overlay-unstable = final: prev: {
         unstable = import nixpkgs-unstable {
 	        inherit system;
 	        config.allowUnfree = true;
         };
       };
+
+      # stable overlay. In addition to the standard nixpkgs with stable packages.
+      # used to enable stable packages for hosts that use the unstable branch as a standard
       overlay-stable = final: prev: {
         stable = import nixpkgs-stable {
           inherit system;
@@ -82,24 +89,7 @@
 	        { nixpkgs.config.pkgs = import nixpkgs-unstable;}
           
           ./hosts/xmgneo15/configuration.nix
-	        ./modules/users.nix
-	        ./modules/nvidia.nix
-	        ./modules/amd.nix
-	        ./modules/virt-manager.nix
-	        ./modules/gaming.nix
-	        ./modules/various_programs.nix
-	        ./modules/sway.nix
-	        ./modules/extrabootentries.nix
-	        ./modules/basic_programs.nix
-	        ./modules/kernel.nix
-	        ./modules/programming.nix
-	        ./modules/ai.nix
-	        ./modules/gnome.nix
-	        ./modules/basic_system.nix
-	        ./modules/gnome_keyring.nix
-	        ./modules/bootloader.nix
-          ./modules/linutil.nix
-          ./modules/hyprland.nix
+	        
 	      ];
       };
 
@@ -109,7 +99,7 @@
       #
       #############################################################################################
       
-      nixosConfigurations."xmgneo15_external_drive" = nixpkgs-unstable.lib.nixosSystem {
+      nixosConfigurations."external_drive" = nixpkgs-unstable.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
@@ -118,24 +108,8 @@
           # set nixpkgs to unstable only for this host
 	        { nixpkgs.config.pkgs = import nixpkgs-unstable;}
           
-          ./hosts/xmgneo15_external_drive/configuration.nix
-	        ./modules/users.nix
-	        ./modules/nvidia.nix
-	        ./modules/amd.nix
-	        ./modules/virt-manager.nix
-	        ./modules/gaming.nix
-	        ./modules/various_programs.nix
-	        ./modules/sway.nix
-	        ./modules/extrabootentries.nix
-	        ./modules/basic_programs.nix
-	        ./modules/kernel.nix
-	        ./modules/programming.nix
-	        ./modules/ai.nix
-	        ./modules/gnome.nix
-	        ./modules/basic_system.nix
-	        ./modules/gnome_keyring.nix
-	        ./modules/linutil.nix
-          ./modules/hyprland.nix
+          ./hosts/external_drive/configuration.nix
+	        
 	      ];
       };
 
@@ -151,17 +125,9 @@
 
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
-          ./hosts/xmgneo15_external_drive/configuration.nix
+
           ./hosts/vm/configuration.nix
-	        ./modules/users.nix
-	        ./modules/sway.nix
-	        ./modules/basic_programs.nix
-	        ./modules/kernel.nix
-	        ./modules/gnome.nix
-	        ./modules/basic_system.nix
-	        ./modules/bootloader.nix
-	        ./modules/gnome_keyring.nix
-          ./modules/linutil.nix
+	        
 	      ];
       };
 
@@ -177,17 +143,9 @@
 
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
-          ./hosts/xmgneo15_external_drive/configuration.nix
+         
           ./hosts/vmqemu/configuration.nix
-	        ./modules/users.nix
-	        ./modules/sway.nix
-	        ./modules/basic_programs.nix
-	        ./modules/kernel.nix
-	        ./modules/gnome.nix
-	        ./modules/basic_system.nix
-	        ./modules/bootloader.nix
-	        ./modules/gnome_keyring.nix
-          ./modules/linutil.nix
+	       
 	      ];
       };
 
@@ -203,17 +161,9 @@
 
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
-          ./hosts/xmgneo15_external_drive/configuration.nix
+
           ./hosts/trekstor/configuration.nix
-	        ./modules/users.nix
-	        ./modules/sway.nix
-	        ./modules/basic_programs.nix
-	        ./modules/kernel.nix
-	        ./modules/gnome.nix
-	        ./modules/basic_system.nix
-	        ./modules/bootloader.nix
-	        ./modules/gnome_keyring.nix
-          ./modules/linutil.nix
+	        
 	      ];
       };
     };

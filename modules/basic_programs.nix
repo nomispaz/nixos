@@ -47,7 +47,7 @@
     pciutils
     ripgrep
     # nix language server
-    nil
+    nixd
   ];
 
   # configs for programs

@@ -12,6 +12,7 @@
   environment.systemPackages = with pkgs.unstable; [
     winetricks
     wine
+    mono
     mangohud
     lutris
     heroic-unwrapped

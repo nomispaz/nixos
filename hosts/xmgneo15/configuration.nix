@@ -9,6 +9,27 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../filesystems.nix
+
+      # modules
+      ../../modules/users.nix
+	    ../../modules/nvidia.nix
+	    ../../modules/amd.nix
+	    ../../modules/virt-manager.nix
+	    ../../modules/gaming.nix
+	    ../../modules/various_programs.nix
+	    ../../modules/sway.nix
+	    ../../modules/extrabootentries.nix
+	    ../../modules/basic_programs.nix
+	    ../../modules/kernel.nix
+	    ../../modules/programming.nix
+	    ../../modules/container.nix
+	    ../../modules/gnome.nix
+	    ../../modules/basic_system.nix
+	    ../../modules/gnome_keyring.nix
+	    ../../modules/bootloader.nix
+      ../../modules/linutil.nix
+      ../../modules/hyprland.nix
+      
     ];
 
   # file system of second ssd
@@ -16,12 +37,14 @@
     { device = "/dev/disk/by-uuid/5478d2bc-1d51-467f-b488-87fed42efffb";
       fsType = "btrfs";
       options = [        
-	"rw"
+	      "rw"
         "noatime"
         "compress=zstd:3"
         "ssd"
         "discard=async"
         "space_cache=v2"
+        "nofail"
+	      "x-systemd.device-timeout=10"
       ];
     };
 
@@ -29,22 +52,17 @@
     { device = "/dev/disk/by-uuid/ce299340-d7ca-48fc-9320-d8ebaeb23898";
       fsType = "xfs";
       options = [        
-	"defaults"
-	"noatime"
+	      "defaults"
+	      "noatime"
+        "nofail"
+	      "x-systemd.device-timeout=10"
       ];
     };
 
-# define hostname
+  # define hostname
   networking.hostName = "xmgneo15";
 
-  # linux kernel
-  boot = {
-    extraModprobeConfig = ''
-      options tuxedo-keyboard kbd_backlight_mode=0
-    '';
-  };
-
-  #nvidia hardware PCI-IDs for nvidia-offload
+  # nvidia hardware PCI-IDs for nvidia-offload
   hardware.nvidia = {
     prime = {
      nvidiaBusId = "PCI:1:0:0";

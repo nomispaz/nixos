@@ -8,6 +8,17 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../filesystems.nix
+
+      # modules
+      ../../modules/users.nix
+	    ../../modules/sway.nix
+	    ../../modules/basic_programs.nix
+	    ../../modules/kernel.nix
+	    ../../modules/gnome.nix
+	    ../../modules/basic_system.nix
+	    ../../modules/bootloader.nix
+	    ../../modules/gnome_keyring.nix
+      ../../modules/linutil.nix
     ];
 
   # define hostname

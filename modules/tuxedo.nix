@@ -26,6 +26,13 @@ SUBSYSTEM=="leds", KERNEL=="*kbd_backlight_3", TAG+="systemd"
   #  (import ../packages/tuxedo-control-center)
   ];
 
+  # linux kernel
+  boot = {
+    extraModprobeConfig = ''
+      options tuxedo-keyboard kbd_backlight_mode=0
+    '';
+  };
+  
   #hardware.tuxedo-control-center = {
   #  enable = true;
   #};
