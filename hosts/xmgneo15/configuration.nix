@@ -59,6 +59,24 @@
       ];
     };
 
+  # arch data subvolume
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/4ec3f8b8-cf0d-43df-ad57-3c73f08742c9";
+      fsType = "btrfs";
+      options = [
+        "subvol=data"
+	      "rw"
+        "noatime"
+        "compress=zstd:3"
+        "ssd"
+        "discard=async"
+        "space_cache=v2"
+        "nofail"
+	      "x-systemd.device-timeout=10"
+      ];
+    };
+
+
   # define hostname
   networking.hostName = "xmgneo15";
 

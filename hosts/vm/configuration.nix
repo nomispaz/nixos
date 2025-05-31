@@ -22,7 +22,7 @@
     ];
 
   # define hostname
-  networking.hostName = "vm";
+  networking.hostName = "vmnixos";
 
   # virtualisation
   # virtualbox
