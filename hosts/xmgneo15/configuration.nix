@@ -29,6 +29,7 @@
 	    ../../modules/bootloader.nix
       ../../modules/linutil.nix
       ../../modules/hyprland.nix
+      ../../modules/gpupassthrough.nix
       
     ];
 

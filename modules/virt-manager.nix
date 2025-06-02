@@ -12,6 +12,7 @@
       ovmf = {
         enable = true;
       };
+      swtpm.enable = true;
     };
   };
 
