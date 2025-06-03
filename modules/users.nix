@@ -12,7 +12,7 @@
     description = "Simon Heise";
     extraGroups = [ "networkmanager" "wheel" "simonheise" ];
     packages = with pkgs; [
+      home-manager
     ];
   };
-
 }

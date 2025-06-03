@@ -29,6 +29,11 @@
       # This should give the least surprises and saves on disk space.
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    # home manager for user environment
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   #############################################################################################
@@ -37,7 +42,7 @@
   #
   #############################################################################################
   
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-stable, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-stable, home-manager, ... } @ inputs:
     let
       system = "x86_64-linux";
 
@@ -83,13 +88,22 @@
 	      specialArgs = { inherit inputs; };
         modules = [
 
-          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable]; })
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable overlay-stable ]; })
 
           # set nixpkgs to unstable only for this host
 	        { nixpkgs.config.pkgs = import nixpkgs-unstable;}
           
           ./hosts/xmgneo15/configuration.nix
-	        
+
+          # make home-manager as a module of nixos
+          # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.simonheise = import ./home/home.nix;
+          }        
 	      ];
       };
 
