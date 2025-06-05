@@ -48,8 +48,8 @@
     ripgrep
     # nix language server
     nixd
-    # git credential manager
-    git-credential-manager
+    # for integration of keyring with e.g. git
+    libsecret
   ];
 
   # configs for programs

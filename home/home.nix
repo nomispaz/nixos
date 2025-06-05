@@ -10,10 +10,12 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  #programs.git = {
-  #  enable = true;
-  #  userName = "nomispaz";
-  #  userEmail = "nomispaz@example.org";
-  #};
-  
+  programs.git = {
+    enable = true;
+    userName = "nomispaz";
+    userEmail = "nomispaz@example.org";
+    extraConfig = {
+      credential.helper = "libsecret";
+    };
+  };
 }
