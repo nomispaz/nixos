@@ -48,6 +48,8 @@
     ripgrep
     # nix language server
     nixd
+    # git credential manager
+    git-credential-manager
   ];
 
   # configs for programs
@@ -60,6 +62,7 @@
     };
     git = {
       enable = true;
+      
     };
     fish.enable = true;
     htop.enable = true;
