@@ -48,8 +48,6 @@
     ripgrep
     # nix language server
     nixd
-    # for integration of keyring with e.g. git
-    libsecret
   ];
 
   # configs for programs
@@ -62,7 +60,6 @@
     };
     git = {
       enable = true;
-      
     };
     fish.enable = true;
     htop.enable = true;
