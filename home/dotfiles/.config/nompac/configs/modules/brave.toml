@@ -1,0 +1,19 @@
+packages = [
+  "brave-bin"
+]
+overlays = [
+  "brave-bin"
+]
+
+[[configs]]
+# patch brave desktop entry to use brave-bin
+path = "/usr/share/applications/brave-browser.desktop"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+StartupWMClass=brave-browser
+TryExec=brave-bin
+Exec=brave-bin %U
+Terminal=false
+'''
+

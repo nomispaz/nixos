@@ -1,0 +1,7 @@
+packages = [
+	"python-dbus-next",
+	"python-i3ipc",
+	"sway",
+	"swaybg",
+	"waybar"
+]

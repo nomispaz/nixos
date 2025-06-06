@@ -1,0 +1,11 @@
+# ignore everything in emacs but init.el
+/*
+/*/
+!init.el
+!config.org
+!README.org
+!config.el
+!config.org*
+!/site-lisp
+!/elpa
+!.gitignore

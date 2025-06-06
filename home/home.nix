@@ -14,6 +14,16 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  ####################################################################
+  # Source all dotfiles available in the file structure that are not specifically changed here
+  #####################################################################
+
+    home.file."${homeDirectory}/.config/" = {
+      source = ./dotfiles/.config;
+      recursive = true;
+    };
+
+ 
   #####################################################################
   # Git
   #####################################################################
@@ -60,5 +70,23 @@ in
     [terminal.shell]
     program = "fish"
   '';
+
+    
+
+  #####################################################################
+  # Docker and podman
+  #####################################################################
+
+  # activate nvidia for containers
+  home.file."${homeDirectory}/.config/containers/containers.conf".text = ''
+    [containers]
+    annotations=["run.oci.keep_original_groups=1",]
+  '';
   
+  home.file."${homeDirectory}/.config/containers/storage.conf".text = ''
+    [storage]
+    driver = "overlay"
+    graphroot = "${homeDirectory}/data/podman"
+  '';
+
 }

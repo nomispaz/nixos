@@ -1,0 +1,29 @@
+general {
+        colors = true
+        interval = 5
+}
+order += "disk /"
+order += "memory"
+order += "volume master"
+order += "tztime berlin"
+
+tztime berlin {
+        format = "%Y-%m-%d %H:%M:%S %Z"
+        timezone = "Europe/Berlin"
+}
+
+memory {
+        format = "Free RAM: %free"
+}
+
+disk "/home" {
+        format = "%free"
+}
+
+volume master {
+    format = "♪: %volume"
+    format_muted = "♪: muted (%volume)"
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}

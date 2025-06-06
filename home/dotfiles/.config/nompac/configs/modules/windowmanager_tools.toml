@@ -1,0 +1,15 @@
+packages = [
+	"brightnessctl",
+	"dunst",
+	"gammastep",
+	"grim",
+	"inotify-tools",
+	"kanshi",
+	"network-manager-applet",
+	"nwg-panel",
+	"pavucontrol",
+	"rofi",
+	"slurp",
+	"wl-clipboard",
+	"wlr-randr"
+]

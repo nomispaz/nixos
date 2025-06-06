@@ -1,0 +1,430 @@
+* General Setup
+** Backups
+By default, Emacs creates automatic backups of files in their original directories. Instead, emacs should save in specific backup directory.
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (setq backup-directory-alist '((".*" . "~/.local/share/emacs/backups")))
+#+end_src
+** integration of wl-copy
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(when (getenv "WAYLAND_DISPLAY")
+(setq wl-copy-process nil)
+  (defun wl-copy (text)
+    (setq wl-copy-process (make-process :name "wl-copy"
+                                        :buffer nil
+                                        :command '("wl-copy" "-f" "-n")
+                                        :connection-type 'pipe
+                                        :noquery t))
+    (process-send-string wl-copy-process text)
+    (process-send-eof wl-copy-process))
+(defun wl-paste ()
+    (if (and wl-copy-process (process-live-p wl-copy-process))
+        nil ; should return nil if we're the current paste owner
+        (shell-command-to-string "wl-paste -n | tr -d \r")))
+(setq interprogram-cut-function 'wl-copy)
+(setq interprogram-paste-function 'wl-paste))
+#+end_src
+
+** Initialize use-package on non-Linux platforms
+
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (unless (package-installed-p 'use-package)
+     (package-install 'use-package))
+#+end_src
+** Activate use-package and add package sources
+
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (require 'package)
+
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+#+end_src
+** Autoclose brackets
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (electric-pair-mode 1)
+#+end_src
+
+** UI
+*** Themes
+**** Spacemacs
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (use-package spacemacs-theme
+      :ensure t
+      ;;:config
+      ;;(load-theme 'spacemacs-dark t)
+      )
+#+end_src
+**** Catppuccin
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+     (use-package catppuccin-theme
+    :ensure t
+    :config
+    (load-theme 'catppuccin :no-confirm)) 
+#+end_src
+
+*** Startup screen
+- disable emacs welcome screen
+  #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+    (setq inhibit-startup-screen t)
+  #+end_src
+
+*** Toolbar, Menubar, Scrollbar
+- Disable the toolbar
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (tool-bar-mode -1)	          ;; Disable the toolbar
+#+end_src
+
+-Disable the menubar
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (menu-bar-mode -1)            ;; Disable the menu bar
+#+end_src
+
+- Disable the scrollbar
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (scroll-bar-mode -1)          ;; Disable visible scrollbar
+#+end_src
+
+*** Fonts
+ #+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+   (set-face-attribute 'default nil :font "DejaVu Sans Mono" :height 180)
+#+end_src
+ 
+- mono font for console and programming
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (set-face-attribute 'fixed-pitch nil :font "DejaVu Sans Mono" :height 180)
+#+end_src
+
+- variable font for e.g. org-mode
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 180)
+#+end_src
+
+*** Zoom in and out
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+#+end_src
+
+*** Nerd-Icons
+To actually install the fonts, M-x nerd-icons-install-fonts needs to be run
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package nerd-icons
+  :ensure t)
+#+end_src
+*** Doom-modeline
+#+BEGIN_SRC emacs-lisp :tangle ~/.config/emacs/config.el
+      (use-package doom-modeline
+            :ensure t
+            :init (doom-modeline-mode 1))
+#+END_SRC
+** Basic Settings
+Remember recently edited files. Can then be shown with recentf-open-files
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el 
+(recentf-mode 1)
+#+end_src
+Save what you enter into minibuffer prompts
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(setq history-length 25)
+(savehist-mode 1)
+#+end_src
+Remember and restore the last cursor location of opened files
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (save-place-mode 1)
+#+end_src
+Show relative line-numbers
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(menu-bar--display-line-numbers-mode-relative)
+#+end_src
+** Desktop package to save last session
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package desktop
+  :init (desktop-save-mode 1)
+  :config
+   ;; don't save the following buffers
+   (add-to-list 'desktop-modes-not-to-save 'dired-mode)
+   (add-to-list 'desktop-modes-not-to-save 'Info-mode)
+   (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
+   (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
+   ;; specify dir to save session
+   desktop-dirname "~/.local/share/emacs/emacs_session_backup"
+   desktop-base-file-name "desktop"
+   desktop-base-lock-name "desktop.lock"
+   )
+#+end_src
+
+** Evil-mode
+Use evil collection for better integration of vim keybindings in various modes.
+
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+    (use-package evil
+      :ensure t
+      :init
+      (setq evil-want-integration t)
+      (setq evil-want-keybinding nil)
+      :config
+      (evil-mode 1)
+      )
+
+  (evil-set-undo-system 'undo-redo)
+
+    (use-package evil-collection
+      :after evil
+      :ensure t
+      :config
+      (evil-collection-init))
+
+  ;; Using RETURN to follow links in Org/Evil 
+  ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "SPC") nil)
+    (define-key evil-motion-state-map (kbd "RET") nil)
+    (define-key evil-motion-state-map (kbd "TAB") nil))
+  ;; Setting RETURN key in org-mode to follow links
+    (setq org-return-follows-link  t)
+#+end_src
+
+** Additional evil keybindings
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+     ;; set leader key in all states
+     (evil-set-leader nil (kbd "SPC"))
+
+     ;; set local leader
+     (evil-set-leader 'normal "," t)
+
+    ;; files
+     (define-key evil-normal-state-map (kbd "<leader> f f") '("Search files" . consult-find))
+     (define-key evil-normal-state-map (kbd "<leader> f r") '("Recent files" . consult-recent-file))
+     (define-key evil-normal-state-map (kbd "<leader> f g") '("Search files (grep)" . consult-grep))
+     (define-key evil-normal-state-map (kbd "<leader> f n") '("New file" . evil-buffer-new))
+
+     ;; buffers
+     (define-key evil-normal-state-map (kbd "<leader> b b") '("Switch to buffer" . consult-buffer))
+     (define-key evil-normal-state-map (kbd "<leader> b k") '("Kill current buffer" . kill-current-buffer))
+     (define-key evil-normal-state-map (kbd "<leader> b r") '("Rename buffer" . rename-buffer))
+     (define-key evil-normal-state-map (kbd "<leader> b s") '("Save buffer" . basic-save-buffer))
+
+     ;; tabs
+     (define-key evil-normal-state-map (kbd "<leader> t t") '("Switch to tab" . tab-switch))
+
+     ;; search
+     (define-key evil-normal-state-map (kbd "<leader> s o") '("Search heading" - consult-outline))
+     (define-key evil-normal-state-map (kbd "<leader> s l") '("Search line" . consult-line))
+
+     ;; org-mode
+     (define-key evil-normal-state-map (kbd "<leader> o e") '("Export org file" . org-export-dispatch))
+      (define-key evil-normal-state-map (kbd "<leader> o a") '("Open org agenda" . org-agenda))
+     (define-key evil-normal-state-map (kbd "<leader> o t") '("Export code blocks" . org-babel-tangle))
+     (define-key evil-normal-state-map (kbd "<leader> o i s") '("Insert scheduled date" . org-schedule))
+
+     ;; flycheck
+     (define-key evil-normal-state-map (kbd "<leader> l l") '("Show list of flycheck errors" . flymake-show-buffer-diagnostics))
+     (define-key evil-normal-state-map (kbd "<leader> l n") '("Next flycheck error" . flymake-goto-next-error))
+     (define-key evil-normal-state-map (kbd "<leader> l p") '("Previous flycheck error" . flymake-goto-previous-error))
+
+    ;; lsp
+     (define-key evil-normal-state-map (kbd "<leader> g r n") '("Rename variable or function" . eglot-rename))
+  (define-key evil-normal-state-map (kbd "<leader> g d") '("LSP goto definition" . xref-find-definitions))
+  (define-key evil-normal-state-map (kbd "<leader> g D") '("LSP Find references" . xref-find-references))
+  (define-key evil-normal-state-map (kbd "<leader> g s") '("LSP show doc in buffer" . eldoc))
+  (define-key evil-normal-state-map (kbd "C-.") '("LSP execute code action" . eglot-code-actions))
+
+#+end_src
+** Whichkey
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (use-package which-key
+    :ensure t
+    :init
+    (which-key-mode 1)
+    :diminish which-key-mode
+    :config
+    (setq which-key-idle-delay 0.3)
+    (setq which-key-allow-evil-operators t)
+    )
+#+end_src
+
+* Setup LSP
+** eglot
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+    (use-package eglot
+      :ensure t)
+#+end_src
+** Setup language specifics
+#+BEGIN_SRC emacs-lisp :tangle ~/.config/emacs/config.el
+        ; Enable lsp-mode for Go and Rust modes
+        (use-package go-mode
+          :ensure t
+          :after lsp-mode
+          :init
+          (setq indent-tabs-mode nil)
+          (setq go-announce-deprecations t)
+          (setq go-mode-treesitter-derive t)
+          )
+
+        (add-hook 'go-mode-hook 'eglot-ensure)
+        (add-hook 'go-mode-hook 'yas-minor-mode)
+
+        (use-package rust-mode
+          :ensure t
+          :after lsp-mode
+          :init
+          (setq indent-tabs-mode nil)
+        ;;  (setq rust-mode-treesitter-derive t)
+          )
+    (add-hook 'rust-mode-hook 'eglot-ensure)
+        (add-hook 'rust-mode-hook
+                  (lambda () (setq indent-tabs-mode nil)))
+        (add-hook 'rust-mode-hook 'yas-minor-mode)
+        (setq rust-format-on-save t)
+
+#+END_SRC
+* Snippets
+#+BEGIN_SRC emacs-lisp :tangle  ~/.config/emacs/config.el
+      (use-package yasnippet
+        :ensure t
+        )
+    (use-package yasnippet-snippets
+      :ensure t)
+    (yas-global-mode 1)
+      (add-hook 'elisp-mode-hook 'yas-minor-mode)
+      (add-hook 'org-mode-hook 'yas-minor-mode)
+      (add-hook 'org-mode-hook 'org-superstar-mode)
+
+#+END_SRC
+* Company
+#+BEGIN_SRC emacs-lisp :tangle ~/.config/emacs/config.el
+        ; Enable company-mode with language server support
+        (use-package company
+          :ensure t
+          :custom
+          (company-minimum-prefix-length 2)
+        )
+        (add-hook 'after-init-hook 'global-company-mode)
+    (add-to-list 'company-backends '(company-capf company-yasnippet company-files))
+ (add-hook 'eglot-managed-mode-hook (lambda ()
+
+(add-to-list 'company-backends
+'(company-capf :with company-yasnippet)))) 
+#+END_SRC
+* Minibuffer
+** Enhanced preview and search capabilites
+- filtering of results is possible. Use consult-narrow-help from within the buffer
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package consult
+  :ensure t
+  :config
+  (recentf-mode 1)
+)
+#+end_src
+** Additional information for commands
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package marginalia
+  :ensure t
+  :config
+  (marginalia-mode 1)
+  )
+#+end_src
+
+** Vertical layout of the minibuffer
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package vertico
+  :ensure t
+  :config
+  (setq vertico-cycle t)
+  (setq vertico-resize nil)
+  (vertico-mode 1)
+  )
+#+end_src
+
+** Pattern matching algorithm for minibuffer
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless basic))
+  )
+#+end_src
+
+* Org mode
+** Helper functions
+Set options for every Orgfile. Like
+- automatic indentation
+- set variable font size for better readable text
+- automatically perform line wrap
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+    (defun my/org-mode-setup()
+      ;; active automatic indentation
+      (org-indent-mode)
+      ;; proportially resize font
+      (variable-pitch-mode 1)
+      ;; automatically perform line wrap
+      (visual-line-mode 1)
+      )
+  (defun my/org-font-setup()
+    ;; Replace list hyphen with dot
+    (font-lock-add-keywords 'org-mode
+                            '(("^ *\\([-]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+    ;;Set faces for heading levels.
+    (dolist (face '((org-level-1 . 1.2)
+                    (org-level-2 . 1.1)
+                    (org-level-3 . 1.05)
+                    (org-level-4 . 1.0)
+                    (org-level-5 . 1.1)
+                    (org-level-6 . 1.1)
+                    (org-level-7 . 1.1)
+                    (org-level-8 . 1.1)))
+      (set-face-attribute (car face) nil :font "DejaVu Sans" :weight 'regular :height (cdr face)))
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+  )
+#+end_src
+
+** Activate org mode
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package org
+  :hook (org-mode . my/org-mode-setup)
+  :config
+  ;; replace "..." at the end of collapsed headlines
+  (setq org-ellipsis " ▾"
+	;; remove special characters used for bold, kursiv etc.
+	org-hide-emphasis-markers t)
+
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  ;; RETURN will follow links in org-mode files
+  (setq org-return-follows-link  t)  
+  ;; (setq org-agenda-files
+  ;; 	'("/mnt/nvme2/orgmode/")
+  ;; 	)
+  (my/org-font-setup)
+  :bind (;;copy link anker to clipboard, insert with C-c C-l
+	 ("C-c l" . org-stored-links)
+	 )
+  )
+#+end_src
+
+** Improve org mode bullets and headers
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+(use-package org-superstar
+  :ensure t
+ )
+#+end_src
+
+** Org Agenda
+Define folder for org agenda files.
+#+begin_src emacs-lisp :tangle ~/.config/emacs/config.el
+  (use-package org-agenda
+    :config
+      (setq org-agenda-files (directory-files-recursively "/mnt/nvme2/data/orgmode" "\\.org$"))
+      )
+(catppuccin-reload)
+#+end_src

@@ -1,0 +1,107 @@
+packages = [
+	"lib32-nvidia-utils",
+	"nvidia-open-dkms",
+	"nvidia-prime",
+	"nvidia-settings",
+	"nvidia-utils",
+	"cuda"
+]
+
+[[patches]]
+wlroots = [ "nvidia.patch" ]
+
+[[configs]]
+# set startup variables for sway and nvidia
+path = "/usr/local/bin/sway-nvidia.sh"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+#!/usr/bin/env bash
+
+## Export Environment Variables
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=sway
+export XDG_CURRENT_DESKTOP=sway
+export XDG_CURRENT_SESSION=sway
+
+## Qt environment
+export QT_QPA_PLATFORMTHEME=qt6ct
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_QPA_PLATFORM=xcb
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
+# Hardware cursors not yet working on wlroots
+export WLR_NO_HARDWARE_CURSORS=1
+# Set wlroots renderer to Vulkan to avoid flickering
+#export WLR_RENDERER=vulkan
+# General wayland environment variables
+# Firefox wayland environment variable
+#export MOZ_ENABLE_WAYLAND=1
+#export MOZ_USE_XINPUT2=1
+# OpenGL Variables
+#export GBM_BACKEND=nvidia-drm
+#export __GL_GSYNC_ALLOWED=0
+#export __GL_VRR_ALLOWED=0
+#export __GLX_VENDOR_LIBRARY_NAME=nvidia
+# Xwayland compatibility
+#export XWAYLAND_NO_GLAMOR=1
+
+sway --unsupported-gpu
+'''
+
+[[configs]]
+# startup sway with nvidia-settings
+path = "/usr/share/wayland-sessions/sway.desktop"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+[Desktop Entry]
+Name=Sway
+Comment=An i3-compatible Wayland compositor
+Exec=/usr/local/bin/sway-nvidia.sh
+Type=Application
+'''
+
+[[configs]]
+# use policy by-uuid to reference drives for dracut initramfs
+path = "/etc/dracut.conf.d/nvidia.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+force_drivers+=" nvidia nvidia_modeset nvidia_uvm nvidia_drm "
+'''
+
+[[configs]]
+# blacklist nouveau
+path = "/etc/modprobe.d/nvidia.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+blacklist nouveau
+'''
+
+# pacman hool to update nvidia module in dracut
+[[configs]]
+path = "/etc/pacman.d/hooks/nvidia.hook"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+# Uncomment the installed NVIDIA package
+Target=nvidia
+Target=nvidia-open
+#Target=nvidia-lts
+# If running a different kernel, modify below to match
+Target=linux
+
+[Action]
+Description=Updating NVIDIA module in dracut
+Depends=dracut
+When=PostTransaction
+NeedsTargets
+Exec=/usr/local/bin/dracut-install.sh
+'''

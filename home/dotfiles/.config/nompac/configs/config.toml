@@ -1,0 +1,391 @@
+name = "Declarative pacman config"
+build_dir = "/var/tmp/nompac_rs"
+patch_dir = "/mnt/nvme2/git_repos/arch_localrepo/patches"
+overlay_dir = "/mnt/nvme2/git_repos/arch_localrepo/overlays"
+local_repo = "/mnt/nvme2/git_repos/arch_localrepo/repository/nomispaz.db.tar.zst"
+pacconfig = "$HOME/.config/nompac/configs/pacman.conf"
+mirrorlist = "$HOME/.config/nompac/configs/mirrorlist"
+snapshot = "2025_05_12"
+imports = [
+  "$HOME/.config/nompac/configs/modules/basic_programs.toml",
+  "$HOME/.config/nompac/configs/modules/amd.toml",
+  # "$HOME/.config/nompac/configs/modules/docker.toml",
+  "$HOME/.config/nompac/configs/modules/podman.toml",
+  "$HOME/.config/nompac/configs/modules/additional_programs.toml",
+  "$HOME/.config/nompac/configs/modules/building_dependencies.toml",
+  "$HOME/.config/nompac/configs/modules/emacs.toml",
+  "$HOME/.config/nompac/configs/modules/gaming.toml",
+  "$HOME/.config/nompac/configs/modules/networking.toml",
+  "$HOME/.config/nompac/configs/modules/programming.toml",
+  "$HOME/.config/nompac/configs/modules/security.toml",
+  "$HOME/.config/nompac/configs/modules/virtualisation.toml",
+  "$HOME/.config/nompac/configs/modules/windowmanager_tools.toml",
+  "$HOME/.config/nompac/configs/modules/nvidia.toml",
+  "$HOME/.config/nompac/configs/modules/kde.toml",
+  "$HOME/.config/nompac/configs/modules/sway.toml",
+  # "$HOME/.config/nompac/configs/modules/hyprland.toml",
+  # "$HOME/.config/nompac/configs/modules/tuxedo.toml",
+  "$HOME/.config/nompac/configs/modules/miracle-wm.toml",
+  "$HOME/.config/nompac/configs/modules/brave.toml",
+  "$HOME/.config/nompac/configs/modules/cosmic-desktop.toml"
+]
+packages = [
+  "cpupower_go",
+  "nompac_rs"
+]
+overlays = [
+  "cpupower_go",
+  "nompac_rs"
+]
+
+[[patches]]
+
+[[configs]]
+# update repositories and mirrorlist that pacman uses
+path = "/etc/pacman.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+# Misc options
+#UseSyslog
+Color
+#NoProgressBar
+CheckSpace
+VerbosePkgLists
+ParallelDownloads = 5
+'''
+[[configs.config_entry]]
+extra_config = '''
+# The testing repositories are disabled by default. To enable, uncomment the
+# repo name header and Include lines. You can add preferred servers immediately
+# after the header, and they will be used before the default mirrors.
+
+[nomispaz]
+SigLevel = Optional TrustAll
+Server = file:///mnt/nvme2/git_repos/arch_localrepo/repository/
+
+#[core-testing]
+#Include = /etc/pacman.d/mirrorlist
+
+[core]
+Include = /home/simonheise/.config/nompac/configs/mirrorlist
+#Include =/etc/pacman.d/mirrorlist
+
+#[extra-testing]
+#Include = /etc/pacman.d/mirrorlist
+
+[extra]
+Include = /home/simonheise/.config/nompac/configs/mirrorlist
+#Include = /etc/pacman.d/mirrorlist
+
+# If you want to run 32 bit applications on your x86_64 system,
+# enable the multilib repositories as required here.
+
+#[multilib-testing]
+#Include = /etc/pacman.d/mirrorlist
+
+#[multilib]
+#Include = /etc/pacman.d/mirrorlist
+
+# An example of a custom package repository.  See the pacman manpage for
+# tips on creating your own repositories.
+#[custom]
+#SigLevel = Optional TrustAll
+#Server = file:///home/custompkgs
+[multilib]
+Include = /home/simonheise/.config/nompac/configs/mirrorlist
+#Include = /etc/pacman.d/mirrorlist
+'''
+
+
+[[configs]]
+# change user in qemu so that audio works correctly
+path = "/etc/libvirt/qemu.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+#user = "libvirt-qemu"
+user = "simonheise"
+'''
+[[configs.config_entry]]
+extra_config = '''
+#group = "libvirt-qemu"
+group = "simonheise"
+'''
+
+# set boot options in grub
+# in CMDLINE_LINUX_DEFAULTS add apparmor, amd-pstate to epp, activate early kernel loading for nvidia-driver
+# use GRUB_TOP_LEVEL to always use the standard linux kernel in first boot menu regardless of other installed kernels
+[[configs]]
+path = "/etc/default/grub"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="Arch"
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 mitigations=auto security=apparmor amd_pstate=active nvidia_drm.modeset=1 fbdev=1"
+GRUB_CMDLINE_LINUX=""
+GRUB_TOP_LEVEL="/boot/vmlinuz-linux"
+'''
+
+# harden system (KRNL-5820 disable coredumps)
+[[configs]]
+path = "/etc/systemd/coredump.conf.d/custom.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+[Coredump]
+Storage=none
+'''
+[[configs]]
+path = "/etc/security/limits.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+* hard core 0
+'''
+
+[[configs]]
+# Improve password hash quality
+path = "/etc/login.defs"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+# Define the number of SHA rounds.
+# With a lot of rounds, it is more difficult to brute-force the password.
+# However, more CPU resources will be needed to authenticate users if
+# this value is increased.
+#
+# If not specified, the libc will choose the default number of rounds (5000),
+# which is orders of magnitude too low for modern hardware.
+# The values must be within the 1000-999999999 range.
+# If only one of the MIN or MAX values is set, then this value will be used.
+# If MIN > MAX, the highest value will be used.
+#
+SHA_CRYPT_MIN_ROUNDS 500000
+SHA_CRYPT_MAX_ROUNDS 500000
+'''
+
+[[configs]]
+# predefine host-file for localhost
+path = "/etc/hosts"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+# Static table lookup for hostnames.
+# See hosts(5) for details.
+127.0.0.1 localhost
+127.0.0.1 XMGneo15Arch
+'''
+
+[[configs]]
+# create keyboard config for x11
+path = "/etc/X11/xorg.conf.d/00-keyboard.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+# Written by systemd-localed(8), read by systemd-localed and Xorg. It's
+# probably wise not to edit this file manually. Use localectl(1) to
+# instruct systemd-localed to update it.
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "de"
+        Option "XkbModel" "microsoftpro"
+        Option "XkbVariant" "nodeadkeys"
+        Option "XkbOptions" "terminate:ctrl_alt_bksp,caps:ctrl_modifier"  
+EndSection
+'''
+
+[[configs]]
+# use policy by-uuid to reference drives for dracut initramfs
+path = "/etc/dracut.conf.d/10-persistent_policy.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+# When dracut generates the initramfs, it must refer to disks and partitions to
+# be mounted in a persistent manner, to make sure the system will boot
+# correctly. By default, dracut uses /dev/mapper device names.
+# For example, when dracut detects multipath devices, it will use the DM-MP
+# device names such as
+#
+# /dev/mapper/3600a098000aad73f00000a3f5a275dc8-part1
+#
+# This is good if the system always runs in multipath mode. But if the system is
+# started without multipathing, booting with such an initramfs will fail,
+# because the /dev/mapper devices will not exist. The same problem can happen
+# with multipath maps and cloned SAN LUNs.
+#
+# To prevent this from happening, the dracut policy for addressing disks
+# and partitions is changed to use /dev/disk/by-uuid device names on all
+# architectures except s390/s390x, which must be by-path (bsc#915218).
+persistent_policy="by-uuid"
+'''
+
+# hooks to automatically run dracut on update
+[[configs]]
+path = "/etc/pacman.d/hooks/60-dracut-remove.hook"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+[Trigger]
+Type = Path
+Operation = Remove
+Target = usr/lib/modules/*/pkgbase
+
+[Action]
+Description = Removing linux initcpios...
+When = PreTransaction
+Exec = /usr/local/bin/dracut-remove.sh
+NeedsTargets
+'''
+[[configs]]
+path = "/etc/pacman.d/hooks/90-dracut-install.hook"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/lib/modules/*/pkgbase
+Target = usr/lib/modules/*/vmlinuz
+Target = usr/lib/dracut/*
+Target = usr/lib/systemd/systemd
+
+[Action]
+Description = Updating linux initcpios (with dracut!)...
+When = PostTransaction
+Exec = /usr/local/bin/dracut-install.sh
+Depends = dracut
+NeedsTargets
+'''
+
+[[configs]]
+# set system locale
+path = "/etc/locale.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+LANG=en_US.UTF-8
+LC_MONETARY=de_DE.UTF-8
+LC_NUMERIC=de_DE.UTF-8
+LC_TIME=de_DE.UTF-8
+'''
+
+[[configs]]
+# set system locale
+path = "/etc/locale.gen"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+en_US.UTF-8 UTF-8
+de_DE.UTF-8 UTF-8
+'''
+
+[[configs]]
+# set console keyboard language
+path = "/etc/vconsole.conf"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+# Written by systemd-localed(8) or systemd-firstboot(1), read by systemd-localed
+# and systemd-vconsole-setup(8). Use localectl(1) to update this file.
+KEYMAP=de
+XKBLAYOUT=de
+XKBMODEL=microsoftpro
+XKBVARIANT=nodeadkeys
+XKBOPTIONS=terminate:ctrl_alt_bksp,caps:ctrl_modifier
+'''
+
+[[configs]]
+# set hostname
+path = "/etc/hostname"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+XMGneo15Arch
+'''
+
+# scripts to use with nwg-panel
+
+[[configs]]
+# read average cpu load
+path = "/usr/local/bin/cpu_load.sh"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+#!/bin/bash
+
+# Extract CPU frequencies from /proc/cpuinfo
+frequencies=$(cat /proc/cpuinfo | grep "MHz" | cut -d':' -f2)
+
+# Initialize sum and count variables
+sum=0
+count=0
+
+# Loop through each frequency
+for freq in $frequencies; do
+  sum=$(echo "$sum + $freq" | bc)
+  count=$((count + 1))
+done
+
+# Calculate the average in GHz if count is greater than zero
+if [ $count -gt 0 ]; then
+  average_mhz=$(echo "$sum / $count" | bc)
+  average_ghz=$(echo "scale=2; $average_mhz / 1000" | bc)
+  echo " $average_ghz GHz"
+else
+  echo "No frequencies found in /proc/cpuinfo."
+fi
+'''
+
+[[configs]]
+# read average cpu temperature
+path = "/usr/local/bin/cpu_temp.sh"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+#!/bin/bash
+echo  $(cat /sys/class/thermal/thermal_zone0/temp | cut -c 1,2)°C
+'''
+
+[[configs]]
+# check if microphone is muted
+path = "/usr/local/bin/mic_check_muted.sh"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+#!/bin/bash
+
+# Get the volume information
+volume_info=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@)
+
+# Check if the word "MUTED" is present in the output
+if echo "$volume_info" | grep -q "MUTED"; then
+    echo 
+else
+    echo 
+fi
+'''
+
+[[configs]]
+# check if microphone is muted
+path = "/usr/local/bin/ram_usage.sh"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+#!/bin/bash
+awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {printf " %d%%\n", (total-available)*100/total}' /proc/meminfo
+'''
+
+[[configs]]
+# check if microphone is muted
+path = "/usr/local/bin/ram_usage.sh"
+sudo = true
+[[configs.config_entry]]
+extra_config = '''
+#!/bin/bash
+awk '/MemTotal/ {total=$2} /MemAvailable/ {available=$2} END {printf " %d%%\n", (total-available)*100/total}' /proc/meminfo
+'''

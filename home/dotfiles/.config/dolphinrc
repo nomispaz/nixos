@@ -1,0 +1,18 @@
+[ExtractDialog]
+2 screens: Window-Maximized=true
+DirHistory[$e]=/mnt/nvme2/data/twbackup/
+
+[General]
+ShowFullPath=true
+Version=202
+ViewPropsTimestamp=2024,5,16,17,49,36.117
+
+[KFileDialog Settings]
+Places Icons Auto-resize=false
+Places Icons Static Size=22
+
+[MainWindow]
+MenuBar=Disabled
+
+[Search]
+What=Content

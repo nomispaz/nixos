@@ -1,0 +1,9 @@
+packages = [
+	"miracle-wm",
+	"mir"
+]
+
+overlays = [
+	"miracle-wm",
+	"mir"
+]

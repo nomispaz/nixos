@@ -1,0 +1,14 @@
+packages = [
+	"python-flake8",
+	"go",
+	"gopls",
+	"delve",
+	"python-pip",
+	"python-pipx",
+	"python-lsp-server",
+	"python-pywlroots-debug",
+	"rust-analyzer",
+	"rustup",
+	"mdbook",
+	"code"
+]

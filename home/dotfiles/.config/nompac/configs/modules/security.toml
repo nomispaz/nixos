@@ -1,0 +1,7 @@
+packages = [
+	"apparmor",
+	"chrony",
+	"clamav",
+	"lynis",
+	"rkhunter"
+]

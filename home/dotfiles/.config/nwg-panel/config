@@ -1,0 +1,301 @@
+[
+  {
+    "name": "panel-top",
+    "output": "",
+    "layer": "bottom",
+    "position": "top",
+    "controls": "right",
+    "width": "auto",
+    "height": 30,
+    "homogeneous": true,
+    "margin-top": 0,
+    "margin-bottom": 0,
+    "padding-horizontal": 0,
+    "padding-vertical": 1,
+    "spacing": 16,
+    "items-padding": 0,
+    "icons": "light",
+    "css-name": "panel-top",
+    "modules-left": [
+      "sway-workspaces",
+      "hyprland-workspaces"
+    ],
+    "modules-center": [
+      "clock"
+    ],
+    "modules-right": [
+      "tray",
+      "executor-cpu_avg_load",
+      "executor-ram_usage_percent",
+      "executor-cpu_temp_cust",
+      "executor-mic_check_mute"
+    ],
+    "controls-settings": {
+      "components": [
+        "brightness",
+        "volume",
+        "battery",
+        "per-app-volume"
+      ],
+      "commands": {
+        "battery": ""
+      },
+      "show-values": false,
+      "interval": 1,
+      "icon-size": 20,
+      "hover-opens": true,
+      "leave-closes": true,
+      "click-closes": true,
+      "css-name": "controls-window",
+      "custom-items": [
+        {
+          "name": "Panel settings",
+          "icon": "nwg-panel",
+          "cmd": "nwg-panel-config"
+        }
+      ],
+      "menu": {
+        "name": "Exit",
+        "icon": "system-shutdown-symbolic",
+        "items": [
+          {
+            "name": "Lock",
+            "cmd": "swaylock -f -c 000000"
+          },
+          {
+            "name": "Logout",
+            "cmd": "swaymsg exit"
+          },
+          {
+            "name": "Reboot",
+            "cmd": "systemctl reboot"
+          },
+          {
+            "name": "Shutdown",
+            "cmd": "systemctl -i poweroff"
+          }
+        ]
+      },
+      "show-brightness": true,
+      "show-volume": true,
+      "show-battery": true,
+      "output-switcher": true,
+      "per-app-volume": false,
+      "backlight-controller": "brightnessctl",
+      "backlight-device": "",
+      "window-width": 0,
+      "window-margin-horizontal": 0,
+      "window-margin-vertical": 0,
+      "root-css-name": "controls-overview",
+      "battery-low-level": 20,
+      "battery-low-interval": 3,
+      "processes-label": "Processes",
+      "readme-label": "README",
+      "angle": 0.0
+    },
+    "tray": {
+      "root-css-name": "tray",
+      "inner-css-name": "inner-tray",
+      "icon-size": 20,
+      "smooth-scrolling-threshold": 0,
+      "new-left": false
+    },
+    "sway-taskbar": {
+      "workspace-menu": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "name-max-len": 20,
+      "image-size": 20,
+      "workspaces-spacing": 0,
+      "task-padding": 0,
+      "show-app-icon": true,
+      "show-app-name": true,
+      "show-layout": true,
+      "workspace-buttons": false,
+      "all-workspaces": true,
+      "mark-autotiling": true,
+      "mark-xwayland": true,
+      "all-outputs": true,
+      "angle": 0.0
+    },
+    "sway-workspaces": {
+      "numbers": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ],
+      "custom-labels": [],
+      "focused-labels": [],
+      "show-icon": true,
+      "image-size": 16,
+      "show-name": true,
+      "name-length": 40,
+      "mark-autotiling": true,
+      "mark-content": true,
+      "hide-empty": true,
+      "show-layout": true,
+      "angle": 0.0
+    },
+    "clock": {
+      "format": "%a, %d. %b  %H:%M:%S",
+      "tooltip-text": "",
+      "on-left-click": "",
+      "on-middle-click": "",
+      "on-right-click": "",
+      "on-scroll-up": "",
+      "on-scroll-down": "",
+      "css-name": "clock",
+      "interval": 1
+    },
+    "playerctl": {
+      "buttons-position": "left",
+      "icon-size": 16,
+      "chars": 30,
+      "scroll": false,
+      "button-css-name": "",
+      "label-css-name": "",
+      "interval": 1
+    },
+    "button-sample": {
+      "command": "notify-send 'sample button'",
+      "icon": "view-grid",
+      "label": "",
+      "label-position": "right",
+      "css-name": "button-custom",
+      "icon-size": 16
+    },
+    "menu-start": "right",
+    "exclusive-zone": true,
+    "sigrt": 64,
+    "use-sigrt": false,
+    "scratchpad": {},
+    "sway-mode": {
+      "show-default": false,
+      "show-icon": true,
+      "css-name": "",
+      "icon-size": 20,
+      "angle": 0.0
+    },
+    "openweather": {},
+    "brightness-slider": {
+      "show-brightness": false,
+      "show-volume": false,
+      "show-battery": true,
+      "icon-size": 16,
+      "interval": 10,
+      "hover-opens": false,
+      "leave-closes": false,
+      "root-css-name": "brightness-module",
+      "css-name": "brightness-popup",
+      "angle": 0.0,
+      "icon-placement": "start",
+      "backlight-device": "",
+      "backlight-controller": "brightnessctl",
+      "slider-orientation": "horizontal",
+      "slider-inverted": false,
+      "popup-icon-placement": "start",
+      "popup-horizontal-alignment": "left",
+      "popup-vertical-alignment": "top",
+      "popup-width": 256,
+      "popup-height": 64,
+      "popup-horizontal-margin": 0,
+      "popup-vertical-margin": 0,
+      "step-size": 1
+    },
+    "dwl-tags": {
+      "tag-names": "1 2 3 4 5 6 7 8 9",
+      "title-limit": 55,
+      "angle": 0.0
+    },
+    "hyprland-taskbar": {},
+    "hyprland-workspaces": {},
+    "run-if-output-exist": [],
+    "run-if-output-absent": [],
+    "monitor": "BOE 0x0A67 Unknown",
+    "width-as-percentage": false,
+    "start-hidden": false,
+    "hyprland-submap": {},
+    "keyboard-layout": {},
+    "random-wallpaper": {},
+    "executor-cpu_temp_cust": {
+      "script": "/home/simonheise/.config/nwg-panel/scripts/cpu_temp.sh",
+      "tooltip-text": "",
+      "on-left-click": "",
+      "on-middle-click": "",
+      "on-right-click": "",
+      "on-scroll-up": "",
+      "on-scroll-down": "",
+      "root-css-name": "",
+      "css-name": "cpu_temp_cust",
+      "icon-placement": "left",
+      "icon-size": 16,
+      "interval": 3,
+      "angle": 0.0,
+      "sigrt": 34,
+      "use-sigrt": false
+    },
+    "executor-cpu_avg_load": {
+      "script": "/home/simonheise/.config/nwg-panel/scripts/cpu_load.sh",
+      "tooltip-text": "",
+      "on-left-click": "",
+      "on-middle-click": "",
+      "on-right-click": "",
+      "on-scroll-up": "",
+      "on-scroll-down": "",
+      "root-css-name": "",
+      "css-name": "cpu_avg_load",
+      "icon-placement": "left",
+      "icon-size": 16,
+      "interval": 5,
+      "angle": 0.0,
+      "sigrt": 34,
+      "use-sigrt": false
+    },
+    "executor-ram_usage_percent": {
+      "script": "/home/simonheise/.config/nwg-panel/scripts/ram_usage.sh",
+      "tooltip-text": "",
+      "on-left-click": "",
+      "on-middle-click": "",
+      "on-right-click": "",
+      "on-scroll-up": "",
+      "on-scroll-down": "",
+      "root-css-name": "",
+      "css-name": "ram_usage_percent",
+      "icon-placement": "left",
+      "icon-size": 16,
+      "interval": 2,
+      "angle": 0.0,
+      "sigrt": 34,
+      "use-sigrt": false
+    },
+    "executor-mic_check_mute": {
+      "script": "/home/simonheise/.config/nwg-panel/scripts/mic_check_muted.sh",
+      "tooltip-text": "",
+      "on-left-click": "",
+      "on-middle-click": "",
+      "on-right-click": "",
+      "on-scroll-up": "",
+      "on-scroll-down": "",
+      "root-css-name": "",
+      "css-name": "mic_check_mute",
+      "icon-placement": "left",
+      "icon-size": 16,
+      "interval": 1,
+      "angle": 0.0,
+      "sigrt": 34,
+      "use-sigrt": false
+    }
+  }
+]

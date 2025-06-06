@@ -1,0 +1,60 @@
+// Place your key bindings in this file to override the defaults
+[
+  // Navigating the terminals
+  {
+    "key": "ctrl+shift+n",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  // create new terminal
+  {
+    "key": "ctrl+shift+t",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus"
+  },
+  // toggle panels
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  {
+    "key": "ctrl+d",
+    "command": "workbench.actions.view.problems",
+    "when": "workbench.panel.markers.view.active"
+  },
+  {
+    "key": "shift+k",
+    "command": "editor.action.showDefinitionPreviewHover"
+  },
+  // movement via vim bindings in focused hover windows
+  {
+    "key": "h",
+    "command": "editor.action.scrollLeftHover",
+    "when": "editorHoverFocused"
+  },
+  {
+    "key": "j",
+    "command": "editor.action.scrollDownHover",
+    "when": "editorHoverFocused"
+  },
+  {
+    "key": "k",
+    "command": "editor.action.scrollUpHover",
+    "when": "editorHoverFocused"
+  },
+  {
+    "key": "l",
+    "command": "editor.action.scrollRightHover",
+    "when": "editorHoverFocused"
+  }
+]

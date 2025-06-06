@@ -1,0 +1,4 @@
+packages = [
+	"plasma-meta",
+	"plasma-workspace"
+]
