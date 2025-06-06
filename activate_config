@@ -1,6 +1,6 @@
 git clone --bare https://github.com/nomispaz/nixos.git $HOME/git_repos/nixos
 function config {
-   git --git-dir=$HOME/git_repos/nixos/ --work-tree=$HOME/.config $@
+   git --git-dir=$HOME/git_repos/nixos/ --work-tree=$HOME/.config/nixos $@
 }
 mkdir -p .nixos-backup
 config checkout main
