@@ -5,6 +5,6 @@
   ];
 
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.gnome.enableGnomeKeyring = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
 
 }
