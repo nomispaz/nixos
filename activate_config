@@ -1,0 +1,14 @@
+git clone --bare https://github.com/nomispaz/nixos.git $HOME/git_repos/nixos
+function config {
+   git --git-dir=$HOME/git_repos/nixos/ --work-tree=$HOME $@
+}
+mkdir -p .nixos-backup
+config checkout main
+if [ $? = 0 ]; then
+  echo "Checked out config.";
+  else
+    echo "Backing up pre-existing dot files.";
+    config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .nixos-backup/{}
+fi;
+config checkout main
+config config status.showUntrackedFiles no
