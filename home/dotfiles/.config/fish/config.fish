@@ -5,6 +5,8 @@ set fish_greeting
 # set aliases
 
 alias config="git --git-dir=$HOME/git_repos/dotfiles/ --work-tree=$HOME $argv"
+alias nixosconf="git --git-dir=$HOME/git_repos/nixos/.git --work-tree=$HOME/git_repos/nixos/ $argv"
+
 
 # restart emacs client
 alias emacsd='systemctl --user restart --now emacs'
