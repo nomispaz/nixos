@@ -49,7 +49,7 @@
     # nix language server
     nixd
     # add git credential manager
-    git-credential-manager
+    #git-credential-manager
   ];
 
   # configs for programs
@@ -62,6 +62,7 @@
     };
     git = {
       enable = true;
+      package = pkgs.git.override { withLibsecret = true; };
     };
     fish.enable = true;
     htop.enable = true;
