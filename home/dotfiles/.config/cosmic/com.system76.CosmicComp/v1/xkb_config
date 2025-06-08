@@ -1,9 +1,0 @@
-(
-    rules: "",
-    model: "microsoftpro",
-    layout: "de",
-    variant: "nodeadkeys",
-    options: Some("terminate:ctrl_alt_bksp,caps:ctrl_modifier"),
-    repeat_delay: 600,
-    repeat_rate: 25,
-)

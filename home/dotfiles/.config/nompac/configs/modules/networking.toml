@@ -1,9 +1,0 @@
-packages = [
-	"blueman",
-	"bridge-utils",
-	"dnsmasq",
-	"iwd",
-	"networkmanager",
-	"wireless_tools",		
-	"wpa_supplicant"
-]

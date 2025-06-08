@@ -1,4 +1,0 @@
-packages = [
-	"podman",
-	"nvidia-container-toolkit"
-]

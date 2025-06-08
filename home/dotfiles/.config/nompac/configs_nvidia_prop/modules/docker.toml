@@ -1,4 +1,0 @@
-packages = [
-	"docker",
-	"nvidia-container-toolkit"
-]

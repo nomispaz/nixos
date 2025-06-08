@@ -1,8 +1,0 @@
-packages = [
-	#"tuxedo-control-center-bin",
-	"tuxedo-drivers-dkms"
-]
-overlays = [
-	"tuxedo-drivers-dkms",
-	#"tuxedo-control-center-bin"
-]

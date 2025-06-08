@@ -1,6 +1,0 @@
-packages = [
-	"python-tqdm",
-	"meson",
-	"ninja",
-	"wayland-protocols"
-]

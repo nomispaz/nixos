@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-exec /usr/lib64/polkit-kde-authentication-agent-1
-exec /usr/bin/VBoxClient-all
-exec systemctl --user restart emacs
