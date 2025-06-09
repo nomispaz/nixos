@@ -162,6 +162,9 @@
     dejavu_fonts
   ];
 
+  # automatically optimise nix store
+  nix.optimise.automatic = true;
+
   system.stateVersion = "24.11";
 
 }
