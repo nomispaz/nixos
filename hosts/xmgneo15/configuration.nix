@@ -12,25 +12,26 @@
 
       # modules
       ../../modules/users.nix
-	    ../../modules/nvidia.nix
-	    ../../modules/amd.nix
-	    ../../modules/virt-manager.nix
-	    ../../modules/gaming.nix
-	    ../../modules/various_programs.nix
-	    ../../modules/sway.nix
-	    ../../modules/extrabootentries.nix
-	    ../../modules/basic_programs.nix
-	    ../../modules/kernel.nix
-	    ../../modules/programming.nix
-	    ../../modules/container.nix
-	    ../../modules/gnome.nix
-	    ../../modules/basic_system.nix
-	    ../../modules/gnome_keyring.nix
-	    ../../modules/bootloader.nix
+      ../../modules/nvidia.nix
+      ../../modules/amd.nix
+      ../../modules/virt-manager.nix
+      ../../modules/gaming.nix
+      ../../modules/various_programs.nix
+      ../../modules/sway.nix
+      ../../modules/extrabootentries.nix
+      ../../modules/basic_programs.nix
+      ../../modules/kernel.nix
+      ../../modules/programming.nix
+      ../../modules/container.nix
+      ../../modules/gnome.nix
+      ../../modules/basic_system.nix
+      ../../modules/gnome_keyring.nix
+      ../../modules/bootloader.nix
       ../../modules/linutil.nix
       ../../modules/hyprland.nix
       ../../modules/gpupassthrough.nix
-      
+      ../../modules/cosmic.nix
+      ../../modules/zen-browser.nix
     ];
 
   # file system of second ssd

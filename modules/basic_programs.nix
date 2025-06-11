@@ -48,8 +48,6 @@
     ripgrep
     # nix language server
     nixd
-    # add git credential manager
-    #git-credential-manager
   ];
 
   # configs for programs

@@ -29,6 +29,14 @@
       # This should give the least surprises and saves on disk space.
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nomispaz-localrepo = {
+      url = ./packages;
+      flake = true;
+      # Avoid pulling in the nixpkgs that we pin in the repo.
+      # This should give the least surprises and saves on disk space.
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # home manager for user environment
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -42,7 +50,7 @@
   #
   #############################################################################################
   
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-stable, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixpkgs-stable, home-manager, nomispaz-localrepo, ... } @ inputs:
     let
       system = "x86_64-linux";
 
