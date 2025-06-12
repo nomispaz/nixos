@@ -1,22 +1,10 @@
-{ config, pkgs, lib, builtins, ... }:
+{ config, pkgs, lib, builtins, ... } @args:
 let
   username = "simonheise";
   homeDirectory = "/home/simonheise";
-  osRelease = builtins.readFile "/etc/os-release";
-  isArch = builtins.match ".*ID=arch.*" osRelease != null;
-  isDebian = builtins.match ".*ID=debian.*" osRelease != null;
-  isNixOS = builtins.match ".*ID=nixos.*" osRelease != null;
-  # Disto dependend settings for git
-  distroSpecificSettings = if isArch then "test" else "test2";
-
-  hostnameOutput = builtins.runCommand "hostname-output" {} ''
-    hostnamectl status
-  '';
-
+  currentDistro = args.distro;
 in
 {
-
-  hostnameInfo = builtins.readFile "${hostnameOutput}/out";
 
   home = {
     username = "${username}";
@@ -51,8 +39,6 @@ in
   [user]
 	email = "nomispaz@example.org"
 	name = "nomispaz"
-
-  "${distroSpecificSettings}"
   '';
 
   #####################################################################
