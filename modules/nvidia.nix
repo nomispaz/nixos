@@ -60,8 +60,8 @@
       wlroots_0_19 = prev.wlroots_0_19.overrideAttrs (old: {
         patches = (old.patches or []) ++ [
            (prev.fetchpatch {
-	    url = "https://raw.githubusercontent.com/nomispaz/nixos/c7570c47b3b340391a5a6c3f71f4cf9401a46b8a/overlays/patches/wlroots/wlroots-0-19-nvidia.patch";
-	    hash = "sha256-s9AYejh9hK5x+v+WWGeflgaSmCFBwFNUNMeeeIxfuPo=";
+	    url = "https://raw.githubusercontent.com/nomispaz/nixos/0f562aee72b4cd2395fe91cba19648a0532b55d2/overlays/patches/wlroots/wlroots-0-19-nvidia.patch";
+	    hash = "sha256-Dl06Md0r/y/yzdWHL/FSWYNWFejZ5Kmf8B9CPkWXxiQ=";
 		})
         ];
       });
