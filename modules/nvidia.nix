@@ -56,6 +56,16 @@
         ];
       });
     })
+    (final: prev: {
+      wlroots_0_19 = prev.wlroots_0_19.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+           (prev.fetchpatch {
+	    url = "https://raw.githubusercontent.com/nomispaz/nixos/c7570c47b3b340391a5a6c3f71f4cf9401a46b8a/overlays/patches/wlroots/wlroots-0-19-nvidia.patch";
+	    hash = "sha256-s9AYejh9hK5x+v+WWGeflgaSmCFBwFNUNMeeeIxfuPo=";
+		})
+        ];
+      });
+    })
   ];
 
 }

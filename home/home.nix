@@ -1,7 +1,7 @@
 { config, pkgs, lib, builtins, ... } @args:
 let
   username = "simonheise";
-  homeDirectory = "/home/simonheise";
+  homeDirectory = "/home/simonheise/test";
   currentDistro = args.distro;
 in
 {

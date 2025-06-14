@@ -1,0 +1,11 @@
+--- a/render/gles2/pass.c	2023-12-21 13:42:26.000000000 -0500
++++ b/render/gles2/pass.c	2024-02-26 22:47:46.731134932 -0500
+@@ -57,7 +57,7 @@
+			goto out;
+		}
+	} else {
+-		glFlush();
++		glFinish();
+	}
+
+	ok = true;
