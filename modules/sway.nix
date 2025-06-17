@@ -18,7 +18,7 @@
         dunst
         gammastep
         python311Packages.i3ipc
-        rofi
+        rofi-wayland
         brightnessctl
         pavucontrol
         wlroots

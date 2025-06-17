@@ -32,6 +32,7 @@
       ../../modules/gpupassthrough.nix
       ../../modules/cosmic.nix
       ../../modules/zen-browser.nix
+      ../../modules/niri.nix
     ];
 
   # file system of second ssd
