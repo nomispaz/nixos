@@ -13,7 +13,6 @@
    clippy
    rustc
    cargo
-   rustup
    rustfmt
    rust-analyzer
    mdbook

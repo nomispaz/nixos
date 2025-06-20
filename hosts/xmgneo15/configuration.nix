@@ -33,6 +33,7 @@
       ../../modules/cosmic.nix
       ../../modules/zen-browser.nix
       ../../modules/niri.nix
+      ../../modules/cosmic_niri_integration.nix
     ];
 
   # file system of second ssd
