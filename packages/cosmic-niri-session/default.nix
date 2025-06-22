@@ -8,7 +8,7 @@
 stdenv.mkDerivation rec {
   pname = "cosmic-ext-niri-session";
   version = "1.0.0";
-  rev = 4;
+  rev = 7;
 
   # create desktop-file
   desktop-file = pkgs.writeText "cosmic-ext-niri.desktop" ''
@@ -18,6 +18,17 @@ stdenv.mkDerivation rec {
     Exec=/run/current-system/sw/bin/start-cosmic-ext-niri
     Type=Application
     DesktopNames=cosmic-niri
+  '';
+
+  # create portals-file
+  portals-file = pkgs.writeText "cosmic-niri-portals.conf" ''
+    [preferred]
+    default=gtk;
+    org.freedesktop.impl.portal.Access=gtk;
+    org.freedesktop.impl.portal.Notification=gtk;
+    org.freedesktop.impl.portal.Secret=gnome-keyring;
+    org.freedesktop.impl.portal.ScreenCast=wlr
+    org.freedesktop.impl.portal.Screenshot=wlr
   '';
 
   start-file = pkgs.writeShellScriptBin "start-cosmic-ext-niri" ''
@@ -51,8 +62,8 @@ stdenv.mkDerivation rec {
         fi
     fi
     
-    export XDG_CURRENT_DESKTOP="''${XDG_CURRENT_DESKTOP:=niri}"
-    export XDG_SESSION_TYPE="''${XDG_SESSION_TYPE:=wayland}"
+    export XDG_CURRENT_DESKTOP="cosmic-niri"
+    export XDG_SESSION_TYPE="wayland"
     export XCURSOR_THEME="''${XCURSOR_THEME:=Cosmic}"
     export _JAVA_AWT_WM_NONREPARENTING=1
     export GDK_BACKEND=wayland,x11
@@ -79,8 +90,10 @@ stdenv.mkDerivation rec {
     runHook preInstall
     mkdir -p $out/bin
     mkdir -p $out/share/wayland-sessions
+    mkdir -p $out/share/xdg-desktop-portal
     cp ${desktop-file} $out/share/wayland-sessions/cosmic-ext-niri.desktop
     cp ${start-file}/bin/start-cosmic-ext-niri $out/bin/
+    cp ${portals-file} $out/share/xdg-desktop-portal/cosmic-niri-portals.conf
     runHook postInstall
   '';
 
