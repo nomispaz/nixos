@@ -16,7 +16,7 @@
    rustfmt
    rust-analyzer
    mdbook
-   vscodium
+   vscodium.fhs
   ];
 
 }

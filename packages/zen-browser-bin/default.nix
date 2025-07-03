@@ -6,12 +6,12 @@
 
 stdenv.mkDerivation rec {
   pname = "zen-browser-bin";
-  version = "1.12.10b";
+  version = "1.13.2b";
   rev = 1;
 
   src = fetchTarball {
     url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen.linux-x86_64.tar.xz";
-    sha256 = "sha256:0ngmv78vvblgc9g50s90qbhy8qn5qsrhxdzgkggs10vmdlcfr47d";
+    sha256 = "sha256:0hmb3zxjn961nd6c0ry5mbcr2iq38i1rvqs31qg99c7mcsv6zjal";
   };
 
   nativeBuildInputs = [ pkgs.makeWrapper pkgs.copyDesktopItems pkgs.wrapGAppsHook ] ;

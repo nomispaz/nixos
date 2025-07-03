@@ -135,7 +135,7 @@
   networking.nftables.enable = true;
   networking.firewall = {
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  #  allowedTCPPorts = [ 8080 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
