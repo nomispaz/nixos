@@ -24,7 +24,10 @@
 	    ../../modules/basic_system.nix
 	    ../../modules/gnome_keyring.nix
 	    ../../modules/linutil.nix
-      ../../modules/hyprland.nix
+      ../../modules/cosmic.nix
+      ../../modules/zen-browser.nix
+      ../../modules/niri.nix
+      ../../modules/cosmic_niri_integration.nix
 
     ];
 

@@ -28,7 +28,6 @@
       ../../modules/gnome_keyring.nix
       ../../modules/bootloader.nix
       ../../modules/linutil.nix
-      ../../modules/hyprland.nix
       ../../modules/gpupassthrough.nix
       ../../modules/cosmic.nix
       ../../modules/zen-browser.nix
