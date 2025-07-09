@@ -12,6 +12,7 @@
     libreoffice
     asunder
     rclone
+    unzip
   ];
 
   # activate flatpak

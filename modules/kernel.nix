@@ -7,7 +7,7 @@
   # linux kernel
   boot = {
     #kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages_6_14;
+    kernelPackages = pkgs.linuxPackages_6_15;
     kernelParams = [
       "mitigations=auto"
       "amd_pstate=active"
