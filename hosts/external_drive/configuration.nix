@@ -19,7 +19,6 @@
 	    ../../modules/basic_programs.nix
 	    ../../modules/kernel.nix
 	    ../../modules/programming.nix
-	    ../../modules/container.nix
 	    ../../modules/gnome.nix
 	    ../../modules/basic_system.nix
 	    ../../modules/gnome_keyring.nix
